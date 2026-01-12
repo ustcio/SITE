@@ -3714,53 +3714,102 @@ console.log(response.text);</code>
 
         // 全局 Turnstile 验证
         let globalVerified = false;
+        let welcomeShown = false;
 
-        function onGlobalTurnstileSuccess(token) {
-            globalVerified = true;
-            // 隐藏验证遮罩
-            document.getElementById('turnstile-overlay').classList.add('hidden');
-            // 显示欢迎弹窗
-            setTimeout(() => {
-                document.getElementById('welcome-overlay').classList.add('active');
-            }, 300);
-            // 存储验证状态
-            sessionStorage.setItem('turnstile-verified', 'true');
-            console.log('Global Turnstile verification successful');
+        // 安全的 Storage 操作（兼容隐私模式和跟踪防护）
+        function safeStorageSet(key, value) {
+            try {
+                sessionStorage.setItem(key, value);
+            } catch (e) {
+                console.warn('Storage blocked, using memory only:', e);
+            }
         }
 
-        function onGlobalTurnstileError() {
-            document.getElementById('turnstile-loading').textContent = '验证加载失败，请刷新页面重试';
-            console.log('Global Turnstile error');
+        function safeStorageGet(key) {
+            try {
+                return sessionStorage.getItem(key);
+            } catch (e) {
+                console.warn('Storage blocked:', e);
+                return null;
+            }
+        }
+
+        function onGlobalTurnstileSuccess(token) {
+            console.log('Global Turnstile verification successful, token received');
+            globalVerified = true;
+            
+            // 隐藏验证遮罩
+            const overlay = document.getElementById('turnstile-overlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                console.log('Turnstile overlay hidden');
+            } else {
+                console.error('turnstile-overlay element not found!');
+            }
+            
+            // 显示欢迎弹窗
+            setTimeout(() => {
+                const welcomeOverlay = document.getElementById('welcome-overlay');
+                if (welcomeOverlay) {
+                    welcomeOverlay.classList.add('active');
+                }
+            }, 300);
+            
+            // 存储验证状态（安全方式）
+            safeStorageSet('turnstile-verified', 'true');
+        }
+
+        function onGlobalTurnstileError(error) {
+            console.error('Global Turnstile error:', error);
+            const loadingEl = document.getElementById('turnstile-loading');
+            if (loadingEl) {
+                loadingEl.textContent = '验证加载失败，请刷新页面重试';
+            }
         }
 
         function closeWelcome() {
-            document.getElementById('welcome-overlay').classList.remove('active');
-            document.getElementById('welcome-overlay').classList.add('hidden');
-            sessionStorage.setItem('welcome-shown', 'true');
+            const welcomeOverlay = document.getElementById('welcome-overlay');
+            if (welcomeOverlay) {
+                welcomeOverlay.classList.remove('active');
+                welcomeOverlay.classList.add('hidden');
+            }
+            welcomeShown = true;
+            safeStorageSet('welcome-shown', 'true');
         }
 
         // 检查是否已验证（同一会话内）
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking verification status...');
+            
             // 检查登录状态
             checkAuthStatus();
             
-            const verified = sessionStorage.getItem('turnstile-verified') === 'true';
-            const welcomeShown = sessionStorage.getItem('welcome-shown') === 'true';
+            const verified = safeStorageGet('turnstile-verified') === 'true';
+            const wasWelcomeShown = safeStorageGet('welcome-shown') === 'true';
+            
+            console.log('Verified from storage:', verified);
             
             if (verified) {
                 document.getElementById('turnstile-overlay').classList.add('hidden');
                 globalVerified = true;
                 
                 // 如果已验证但未显示过欢迎弹窗，显示它
-                if (!welcomeShown) {
+                if (!wasWelcomeShown) {
                     setTimeout(() => {
-                        document.getElementById('welcome-overlay').classList.add('active');
+                        const welcomeOverlay = document.getElementById('welcome-overlay');
+                        if (welcomeOverlay) {
+                            welcomeOverlay.classList.add('active');
+                        }
                     }, 300);
                 }
             }
+            
             // 隐藏加载提示
             setTimeout(() => {
-                document.getElementById('turnstile-loading').classList.add('hidden');
+                const loadingEl = document.getElementById('turnstile-loading');
+                if (loadingEl) {
+                    loadingEl.classList.add('hidden');
+                }
             }, 1000);
         });
 
@@ -4537,4 +4586,12 @@ console.log(response.text);</code>
             // Scroll to section
             const section = document.getElementById(`docs-${sectionId}`);
             if (section) {
-                section.scrollIntoView(
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 初始化
+        initAnimations();
+    </script>
+</body>
+</html>
