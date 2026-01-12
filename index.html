@@ -1166,119 +1166,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Visitor Counter */
-        .visitor-counter {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 2rem 4rem;
-            border-top: 1px solid var(--border);
-            background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.02) 100%);
-        }
-
-        .visitor-counter-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .visitor-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            animation: iconGlow 3s ease-in-out infinite;
-        }
-
-        .visitor-icon::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            background: inherit;
-            filter: blur(10px);
-            opacity: 0.4;
-            z-index: -1;
-        }
-
-        .visitor-icon svg {
-            width: 20px;
-            height: 20px;
-            color: white;
-        }
-
-        @keyframes iconGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
-        }
-
-        .visitor-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .visitor-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 500;
-        }
-
-        .visitor-count-wrapper {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-        }
-
-        .visitor-count {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.75rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
-        }
-
-        .visitor-suffix {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-
-        .visitor-live-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            animation: livePulse 2s ease-in-out infinite;
-            margin-left: 0.5rem;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        .visitor-divider {
-            width: 1px;
-            height: 40px;
-            background: var(--border);
-            margin: 0 1rem;
-        }
-
         /* Footer */
         footer {
             padding: 3rem 4rem;
@@ -1362,28 +1249,6 @@
                 flex-direction: column;
                 gap: 1.5rem;
                 text-align: center;
-            }
-
-            .visitor-counter {
-                padding: 1.5rem;
-            }
-
-            .visitor-counter-inner {
-                gap: 1rem;
-            }
-
-            .visitor-icon {
-                width: 36px;
-                height: 36px;
-            }
-
-            .visitor-icon svg {
-                width: 18px;
-                height: 18px;
-            }
-
-            .visitor-count {
-                font-size: 1.5rem;
             }
         }
 
@@ -3682,39 +3547,6 @@ console.log(response.text);</code>
                 </form>
                 <div class="modal-switch">
                     Remember your password? <a onclick="switchToLogin()">Sign in</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 不蒜子统计脚本 -->
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-    <!-- Visitor Counter Section -->
-    <div class="visitor-counter">
-        <div class="visitor-counter-inner">
-            <div class="visitor-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-            </div>
-            <div class="visitor-info">
-                <span class="visitor-label">Total Visitors</span>
-                <div class="visitor-count-wrapper">
-                    <span class="visitor-count" id="busuanzi_value_site_uv">--</span>
-                    <span class="visitor-suffix">people</span>
-                    <div class="visitor-live-dot" title="Live"></div>
-                </div>
-            </div>
-            <div class="visitor-divider"></div>
-            <div class="visitor-info">
-                <span class="visitor-label">Total Views</span>
-                <div class="visitor-count-wrapper">
-                    <span class="visitor-count" id="busuanzi_value_site_pv">--</span>
-                    <span class="visitor-suffix">views</span>
                 </div>
             </div>
         </div>
