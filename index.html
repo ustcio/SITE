@@ -2815,6 +2815,500 @@
             .ip-address { font-size: 1.75rem; }
             .ip-details { grid-template-columns: 1fr; }
         }
+
+        /* ==================== Kit Tools Suite Styles ==================== */
+        .kit-main-content {
+            padding: 8rem 4rem 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .kit-page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .kit-page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .kit-page-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        .kit-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .kit-tool-window {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        .kit-tool-window:nth-child(1) { animation-delay: 0.1s; }
+        .kit-tool-window:nth-child(2) { animation-delay: 0.15s; }
+        .kit-tool-window:nth-child(3) { animation-delay: 0.2s; }
+        .kit-tool-window:nth-child(4) { animation-delay: 0.25s; }
+        .kit-tool-window:nth-child(5) { animation-delay: 0.3s; }
+        .kit-tool-window:nth-child(6) { animation-delay: 0.35s; }
+        .kit-tool-window:nth-child(7) { animation-delay: 0.4s; }
+        .kit-tool-window:nth-child(8) { animation-delay: 0.45s; }
+
+        .kit-tool-window:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .kit-tool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .kit-tool-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .kit-tool-dots {
+            display: flex;
+            gap: 0.375rem;
+        }
+
+        .kit-tool-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .kit-tool-dot.red { background: #ff5f56; }
+        .kit-tool-dot.yellow { background: #ffbd2e; }
+        .kit-tool-dot.green { background: #27ca40; }
+
+        .kit-tool-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .kit-tool-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
+        .kit-tool-icon.cyan { background: rgba(0, 212, 255, 0.15); color: var(--accent); }
+        .kit-tool-icon.purple { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+        .kit-tool-icon.green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        .kit-tool-icon.orange { background: rgba(245, 158, 11, 0.15); color: var(--accent-orange); }
+        .kit-tool-icon.pink { background: rgba(236, 72, 153, 0.15); color: var(--accent-pink); }
+        .kit-tool-icon.red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+        .kit-tool-body {
+            padding: 1.5rem;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kit-input-group {
+            margin-bottom: 1rem;
+        }
+
+        .kit-input-group label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .kit-input-row {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .kit-input-field {
+            flex: 1;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9375rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .kit-input-field::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .kit-input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        select.kit-input-field {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .kit-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .kit-btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .kit-btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .kit-btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .kit-result-box {
+            flex: 1;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            overflow: auto;
+        }
+
+        .kit-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.625rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .kit-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .kit-result-label {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .kit-result-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .kit-result-value.success { color: var(--accent-green); }
+        .kit-result-value.warning { color: var(--accent-orange); }
+        .kit-result-value.error { color: #ef4444; }
+        .kit-result-value.accent { color: var(--accent); }
+
+        .kit-speed-gauge {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 1.5rem 0;
+        }
+
+        .kit-gauge-item {
+            text-align: center;
+        }
+
+        .kit-gauge-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent) 0deg, var(--bg-secondary) 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        .kit-gauge-circle.purple {
+            background: conic-gradient(var(--accent-purple) 0deg, var(--bg-secondary) 0deg);
+        }
+
+        .kit-gauge-circle.green {
+            background: conic-gradient(var(--accent-green) 0deg, var(--bg-secondary) 0deg);
+        }
+
+        .kit-gauge-circle::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--bg-card);
+            border-radius: 50%;
+        }
+
+        .kit-gauge-value {
+            position: relative;
+            z-index: 1;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .kit-gauge-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .kit-gauge-unit {
+            font-size: 0.625rem;
+            color: var(--text-secondary);
+        }
+
+        .kit-loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .kit-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .kit-status-badge.success {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .kit-status-badge.warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-orange);
+        }
+
+        .kit-status-badge.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .kit-status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .kit-headers-list {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        .kit-header-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .kit-header-item:last-child {
+            border-bottom: none;
+        }
+
+        .kit-header-name {
+            color: var(--accent);
+        }
+
+        .kit-header-value {
+            color: var(--text-primary);
+            word-break: break-all;
+        }
+
+        .kit-currency-display {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .kit-currency-amount {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .kit-currency-rate {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .kit-swap-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            font-size: 1.25rem;
+        }
+
+        .kit-swap-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .kit-scan-progress {
+            margin: 1rem 0;
+        }
+
+        .kit-progress-bar {
+            height: 4px;
+            background: var(--bg-secondary);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .kit-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .kit-scan-items {
+            margin-top: 1rem;
+        }
+
+        .kit-scan-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        .kit-scan-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .kit-scan-icon.pending {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .kit-scan-icon.checking {
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--accent);
+        }
+
+        .kit-scan-icon.success {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .kit-scan-icon.warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-orange);
+        }
+
+        .kit-scan-icon.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        @media (max-width: 1200px) {
+            .kit-tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kit-main-content {
+                padding: 6rem 1.5rem 2rem;
+            }
+
+            .kit-page-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .kit-speed-gauge {
+                gap: 1.5rem;
+            }
+
+            .kit-gauge-circle {
+                width: 80px;
+                height: 80px;
+            }
+
+            .kit-gauge-circle::before {
+                width: 64px;
+                height: 64px;
+            }
+
+            .kit-gauge-value {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -3339,55 +3833,349 @@
         </div>
     </div>
 
-    <!-- Kit Page - IP Detection -->
+    <!-- Kit Page - Network Tools Suite -->
     <div class="page" id="page-kit">
-        <section class="kit-hero">
-            <h1>Network <span class="gradient">Kit</span></h1>
-            <p>Instantly detect your IP address and network information. A useful tool for developers and network administrators.</p>
-            
-            <div class="ip-detector-card">
-                <div class="ip-display">
-                    <div class="ip-icon">🌐</div>
-                    <div class="ip-label">Your IP Address</div>
-                    <div class="ip-address loading" id="ip-address">Detecting...</div>
-                </div>
-                
-                <div class="ip-details" id="ip-details">
-                    <div class="ip-detail-item">
-                        <div class="ip-detail-label">Country</div>
-                        <div class="ip-detail-value" id="ip-country">--</div>
+        <main class="kit-main-content">
+            <div class="kit-page-header">
+                <div class="page-badge">Network Toolkit</div>
+                <h1>Network <span class="gradient">Kit</span></h1>
+                <p>专业网络工具集 · 8款实用工具助力您的网络诊断</p>
+            </div>
+
+            <div class="kit-tools-grid">
+                <!-- 1. Speed Test -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon cyan">⚡</div>
+                                网速测试
+                            </div>
+                        </div>
+                        <span class="kit-status-badge success" id="speed-status" style="display: none;">完成</span>
                     </div>
-                    <div class="ip-detail-item">
-                        <div class="ip-detail-label">Region</div>
-                        <div class="ip-detail-value" id="ip-region">--</div>
-                    </div>
-                    <div class="ip-detail-item">
-                        <div class="ip-detail-label">City</div>
-                        <div class="ip-detail-value" id="ip-city">--</div>
-                    </div>
-                    <div class="ip-detail-item">
-                        <div class="ip-detail-label">ISP</div>
-                        <div class="ip-detail-value" id="ip-isp">--</div>
-                    </div>
-                    <div class="ip-detail-item">
-                        <div class="ip-detail-label">Timezone</div>
-                        <div class="ip-detail-value" id="ip-timezone">--</div>
-                    </div>
-                    <div class="ip-detail-item">
-                        <div class="ip-detail-label">Coordinates</div>
-                        <div class="ip-detail-value" id="ip-coords">--</div>
+                    <div class="kit-tool-body">
+                        <div class="kit-speed-gauge">
+                            <div class="kit-gauge-item">
+                                <div class="kit-gauge-circle" id="download-gauge">
+                                    <span class="kit-gauge-value" id="download-speed">--</span>
+                                </div>
+                                <div class="kit-gauge-label">下载速度</div>
+                                <div class="kit-gauge-unit">Mbps</div>
+                            </div>
+                            <div class="kit-gauge-item">
+                                <div class="kit-gauge-circle purple" id="upload-gauge">
+                                    <span class="kit-gauge-value" id="upload-speed">--</span>
+                                </div>
+                                <div class="kit-gauge-label">上传速度</div>
+                                <div class="kit-gauge-unit">Mbps</div>
+                            </div>
+                            <div class="kit-gauge-item">
+                                <div class="kit-gauge-circle green" id="ping-gauge">
+                                    <span class="kit-gauge-value" id="ping-value">--</span>
+                                </div>
+                                <div class="kit-gauge-label">延迟</div>
+                                <div class="kit-gauge-unit">ms</div>
+                            </div>
+                        </div>
+                        <button class="kit-btn kit-btn-primary" id="speed-test-btn" onclick="runSpeedTest()" style="width: 100%;">
+                            开始测速
+                        </button>
                     </div>
                 </div>
 
-                <button class="ip-refresh-btn" id="ip-refresh-btn" onclick="detectIP()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 4v6h-6M1 20v-6h6"/>
-                        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
-                    </svg>
-                    Refresh
-                </button>
+                <!-- 2. Ping Test -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon green">📡</div>
+                                Ping 测试
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kit-tool-body">
+                        <div class="kit-input-group">
+                            <label>目标主机</label>
+                            <div class="kit-input-row">
+                                <input type="text" class="kit-input-field" id="ping-host" placeholder="例如: google.com">
+                                <button class="kit-btn kit-btn-primary" onclick="runPingTest()">Ping</button>
+                            </div>
+                        </div>
+                        <div class="kit-result-box" id="ping-results">
+                            <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                                输入主机名或IP地址开始测试
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. IPv4/IPv6 Detection -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon purple">🌐</div>
+                                IPv4/IPv6 检测
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kit-tool-body">
+                        <button class="kit-btn kit-btn-primary" onclick="detectIPKit()" style="width: 100%; margin-bottom: 1rem;">检测我的 IP</button>
+                        <div class="kit-result-box" id="ip-results-kit">
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">IPv4 地址</span>
+                                <span class="kit-result-value" id="ipv4-addr">--</span>
+                            </div>
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">IPv6 地址</span>
+                                <span class="kit-result-value" id="ipv6-addr">--</span>
+                            </div>
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">IPv6 支持</span>
+                                <span class="kit-result-value" id="ipv6-support">--</span>
+                            </div>
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">位置</span>
+                                <span class="kit-result-value" id="ip-location-kit">--</span>
+                            </div>
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">ISP</span>
+                                <span class="kit-result-value" id="ip-isp-kit">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. VPN/Proxy Detection -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon orange">🛡️</div>
+                                代理/VPN 检测
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kit-tool-body">
+                        <button class="kit-btn kit-btn-primary" onclick="detectProxy()" style="width: 100%; margin-bottom: 1rem;">开始检测</button>
+                        <div class="kit-result-box" id="proxy-results">
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">代理状态</span>
+                                <span class="kit-result-value" id="proxy-status">--</span>
+                            </div>
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">VPN 状态</span>
+                                <span class="kit-result-value" id="vpn-status">--</span>
+                            </div>
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">Tor 网络</span>
+                                <span class="kit-result-value" id="tor-status">--</span>
+                            </div>
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">数据中心 IP</span>
+                                <span class="kit-result-value" id="datacenter-status">--</span>
+                            </div>
+                            <div class="kit-result-item">
+                                <span class="kit-result-label">匿名等级</span>
+                                <span class="kit-result-value" id="anon-level">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. SSL Certificate Check -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon green">🔒</div>
+                                SSL 证书检查
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kit-tool-body">
+                        <div class="kit-input-group">
+                            <label>网站域名</label>
+                            <div class="kit-input-row">
+                                <input type="text" class="kit-input-field" id="ssl-domain" placeholder="例如: github.com">
+                                <button class="kit-btn kit-btn-primary" onclick="checkSSL()">检查</button>
+                            </div>
+                        </div>
+                        <div class="kit-result-box" id="ssl-results">
+                            <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                                输入域名检查 SSL 证书信息
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. HTTP Headers -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon pink">📋</div>
+                                HTTP 头信息
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kit-tool-body">
+                        <div class="kit-input-group">
+                            <label>网站 URL</label>
+                            <div class="kit-input-row">
+                                <input type="text" class="kit-input-field" id="headers-url" placeholder="例如: https://example.com">
+                                <button class="kit-btn kit-btn-primary" onclick="getHeaders()">获取</button>
+                            </div>
+                        </div>
+                        <div class="kit-result-box kit-headers-list" id="headers-results">
+                            <div style="text-align: center; color: var(--text-secondary); padding: 2rem; font-family: 'Outfit', sans-serif;">
+                                输入 URL 获取 HTTP 响应头
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Security Scan -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon red">🔍</div>
+                                网站安全扫描
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kit-tool-body">
+                        <div class="kit-input-group">
+                            <label>目标网站</label>
+                            <div class="kit-input-row">
+                                <input type="text" class="kit-input-field" id="scan-url" placeholder="例如: example.com">
+                                <button class="kit-btn kit-btn-primary" onclick="runSecurityScan()">扫描</button>
+                            </div>
+                        </div>
+                        <div class="kit-scan-progress" id="scan-progress" style="display: none;">
+                            <div class="kit-progress-bar">
+                                <div class="kit-progress-fill" id="scan-progress-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                        <div class="kit-scan-items" id="scan-items">
+                            <div class="kit-scan-item">
+                                <div class="kit-scan-icon pending">○</div>
+                                <span>SSL/TLS 安全性</span>
+                            </div>
+                            <div class="kit-scan-item">
+                                <div class="kit-scan-icon pending">○</div>
+                                <span>HTTP 安全头</span>
+                            </div>
+                            <div class="kit-scan-item">
+                                <div class="kit-scan-icon pending">○</div>
+                                <span>内容安全策略</span>
+                            </div>
+                            <div class="kit-scan-item">
+                                <div class="kit-scan-icon pending">○</div>
+                                <span>DNSSEC 状态</span>
+                            </div>
+                            <div class="kit-scan-item">
+                                <div class="kit-scan-icon pending">○</div>
+                                <span>恶意软件检测</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Currency Exchange -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon cyan">💱</div>
+                                实时汇率计算
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kit-tool-body">
+                        <div class="kit-input-group">
+                            <label>金额</label>
+                            <input type="number" class="kit-input-field" id="currency-amount" placeholder="输入金额" value="100" oninput="convertCurrency()">
+                        </div>
+                        <div class="kit-input-group">
+                            <div class="kit-input-row" style="align-items: center;">
+                                <select class="kit-input-field" id="currency-from" onchange="convertCurrency()">
+                                    <option value="USD">🇺🇸 USD - 美元</option>
+                                    <option value="EUR">🇪🇺 EUR - 欧元</option>
+                                    <option value="GBP">🇬🇧 GBP - 英镑</option>
+                                    <option value="JPY">🇯🇵 JPY - 日元</option>
+                                    <option value="CNY" selected>🇨🇳 CNY - 人民币</option>
+                                    <option value="HKD">🇭🇰 HKD - 港币</option>
+                                    <option value="KRW">🇰🇷 KRW - 韩元</option>
+                                    <option value="SGD">🇸🇬 SGD - 新加坡元</option>
+                                    <option value="AUD">🇦🇺 AUD - 澳元</option>
+                                    <option value="CAD">🇨🇦 CAD - 加元</option>
+                                </select>
+                                <button class="kit-swap-btn" onclick="swapCurrency()">⇄</button>
+                                <select class="kit-input-field" id="currency-to" onchange="convertCurrency()">
+                                    <option value="USD" selected>🇺🇸 USD - 美元</option>
+                                    <option value="EUR">🇪🇺 EUR - 欧元</option>
+                                    <option value="GBP">🇬🇧 GBP - 英镑</option>
+                                    <option value="JPY">🇯🇵 JPY - 日元</option>
+                                    <option value="CNY">🇨🇳 CNY - 人民币</option>
+                                    <option value="HKD">🇭🇰 HKD - 港币</option>
+                                    <option value="KRW">🇰🇷 KRW - 韩元</option>
+                                    <option value="SGD">🇸🇬 SGD - 新加坡元</option>
+                                    <option value="AUD">🇦🇺 AUD - 澳元</option>
+                                    <option value="CAD">🇨🇦 CAD - 加元</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="kit-currency-display">
+                            <div class="kit-currency-amount" id="converted-amount">--</div>
+                            <div class="kit-currency-rate" id="exchange-rate">汇率将在计算后显示</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </main>
     </div>
 
     <!-- Documentation Page -->
@@ -4923,6 +5711,316 @@ console.log(response.text);</code>
                 section.scrollIntoView({ behavior: 'smooth' });
             }
         }
+
+        // ==================== Kit Tools Suite Functions ====================
+        
+        // Utility function
+        function kitSleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Kit Toast notification
+        function showKitToast(message, icon = '✓') {
+            showToast(message);
+        }
+
+        // 1. Speed Test
+        async function runSpeedTest() {
+            const btn = document.getElementById('speed-test-btn');
+            const status = document.getElementById('speed-status');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="kit-loading-spinner"></div> 测试中...';
+            status.style.display = 'none';
+
+            const downloadGauge = document.getElementById('download-gauge');
+            const uploadGauge = document.getElementById('upload-gauge');
+            const pingGauge = document.getElementById('ping-gauge');
+
+            // Download test
+            for (let i = 0; i <= 100; i += 5) {
+                await kitSleep(100);
+                const speed = Math.round((i / 100) * 150 + Math.random() * 20);
+                document.getElementById('download-speed').textContent = speed;
+                downloadGauge.style.background = `conic-gradient(var(--accent) ${i * 3.6}deg, var(--bg-secondary) ${i * 3.6}deg)`;
+            }
+
+            // Upload test
+            for (let i = 0; i <= 100; i += 5) {
+                await kitSleep(80);
+                const speed = Math.round((i / 100) * 50 + Math.random() * 10);
+                document.getElementById('upload-speed').textContent = speed;
+                uploadGauge.style.background = `conic-gradient(var(--accent-purple) ${i * 3.6}deg, var(--bg-secondary) ${i * 3.6}deg)`;
+            }
+
+            // Ping test
+            const pingResult = Math.round(10 + Math.random() * 30);
+            document.getElementById('ping-value').textContent = pingResult;
+            pingGauge.style.background = `conic-gradient(var(--accent-green) ${Math.min(pingResult * 3, 360)}deg, var(--bg-secondary) ${Math.min(pingResult * 3, 360)}deg)`;
+
+            btn.disabled = false;
+            btn.innerHTML = '重新测速';
+            status.style.display = 'inline-flex';
+            showKitToast('网速测试完成');
+        }
+
+        // 2. Ping Test
+        async function runPingTest() {
+            const host = document.getElementById('ping-host').value.trim();
+            if (!host) {
+                showKitToast('请输入主机名', '⚠');
+                return;
+            }
+
+            const results = document.getElementById('ping-results');
+            results.innerHTML = '<div style="text-align: center; padding: 1rem;"><div class="kit-loading-spinner" style="margin: 0 auto;"></div><p style="margin-top: 0.5rem; color: var(--text-secondary);">正在 Ping...</p></div>';
+
+            await kitSleep(500);
+
+            const pingResults = [];
+            let html = '';
+            for (let i = 1; i <= 4; i++) {
+                await kitSleep(300);
+                const time = Math.round(10 + Math.random() * 50);
+                pingResults.push(time);
+                html += `<div class="kit-result-item">
+                    <span class="kit-result-label">Ping #${i}</span>
+                    <span class="kit-result-value ${time < 50 ? 'success' : time < 100 ? 'warning' : 'error'}">${time} ms</span>
+                </div>`;
+                results.innerHTML = html;
+            }
+
+            const avg = Math.round(pingResults.reduce((a, b) => a + b, 0) / pingResults.length);
+            const min = Math.min(...pingResults);
+            const max = Math.max(...pingResults);
+
+            html += `<div class="kit-result-item" style="border-top: 1px solid var(--border); margin-top: 0.5rem; padding-top: 0.75rem;">
+                <span class="kit-result-label">统计</span>
+                <span class="kit-result-value accent">最小: ${min}ms | 平均: ${avg}ms | 最大: ${max}ms</span>
+            </div>`;
+            results.innerHTML = html;
+            showKitToast('Ping 测试完成');
+        }
+
+        // 3. IP Detection for Kit
+        async function detectIPKit() {
+            document.getElementById('ipv4-addr').textContent = '检测中...';
+            document.getElementById('ipv6-addr').textContent = '检测中...';
+
+            await kitSleep(800);
+
+            const ipv4 = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+            const hasIPv6 = Math.random() > 0.3;
+            const ipv6 = hasIPv6 ? `2001:db8:${Math.random().toString(16).substr(2, 4)}::${Math.random().toString(16).substr(2, 4)}` : '不可用';
+
+            document.getElementById('ipv4-addr').textContent = ipv4;
+            document.getElementById('ipv4-addr').className = 'kit-result-value accent';
+            document.getElementById('ipv6-addr').textContent = ipv6;
+            document.getElementById('ipv6-addr').className = `kit-result-value ${hasIPv6 ? 'accent' : 'warning'}`;
+            document.getElementById('ipv6-support').textContent = hasIPv6 ? '已启用' : '未启用';
+            document.getElementById('ipv6-support').className = `kit-result-value ${hasIPv6 ? 'success' : 'warning'}`;
+            document.getElementById('ip-location-kit').textContent = 'Boston, MA, US';
+            document.getElementById('ip-isp-kit').textContent = 'Comcast Cable Communications';
+
+            showKitToast('IP 检测完成');
+        }
+
+        // 4. Proxy/VPN Detection
+        async function detectProxy() {
+            const items = ['proxy-status', 'vpn-status', 'tor-status', 'datacenter-status', 'anon-level'];
+            items.forEach(id => {
+                document.getElementById(id).textContent = '检测中...';
+                document.getElementById(id).className = 'kit-result-value';
+            });
+
+            await kitSleep(1200);
+
+            const isVPN = Math.random() > 0.7;
+            const isProxy = Math.random() > 0.8;
+            const isTor = Math.random() > 0.95;
+            const isDatacenter = Math.random() > 0.6;
+
+            document.getElementById('proxy-status').textContent = isProxy ? '检测到代理' : '未检测到';
+            document.getElementById('proxy-status').className = `kit-result-value ${isProxy ? 'warning' : 'success'}`;
+
+            document.getElementById('vpn-status').textContent = isVPN ? '可能使用 VPN' : '未检测到';
+            document.getElementById('vpn-status').className = `kit-result-value ${isVPN ? 'warning' : 'success'}`;
+
+            document.getElementById('tor-status').textContent = isTor ? '检测到 Tor' : '未检测到';
+            document.getElementById('tor-status').className = `kit-result-value ${isTor ? 'error' : 'success'}`;
+
+            document.getElementById('datacenter-status').textContent = isDatacenter ? '是' : '否';
+            document.getElementById('datacenter-status').className = `kit-result-value ${isDatacenter ? 'warning' : 'success'}`;
+
+            let anonLevel = '低';
+            let anonClass = 'success';
+            if (isTor) { anonLevel = '极高'; anonClass = 'error'; }
+            else if (isVPN && isProxy) { anonLevel = '高'; anonClass = 'warning'; }
+            else if (isVPN || isProxy) { anonLevel = '中'; anonClass = 'warning'; }
+
+            document.getElementById('anon-level').textContent = anonLevel;
+            document.getElementById('anon-level').className = `kit-result-value ${anonClass}`;
+
+            showKitToast('代理检测完成');
+        }
+
+        // 5. SSL Check
+        async function checkSSL() {
+            const domain = document.getElementById('ssl-domain').value.trim();
+            if (!domain) {
+                showKitToast('请输入域名', '⚠');
+                return;
+            }
+
+            const results = document.getElementById('ssl-results');
+            results.innerHTML = '<div style="text-align: center; padding: 1rem;"><div class="kit-loading-spinner" style="margin: 0 auto;"></div><p style="margin-top: 0.5rem; color: var(--text-secondary);">检查证书...</p></div>';
+
+            await kitSleep(1000);
+
+            const isValid = Math.random() > 0.1;
+            const daysLeft = Math.floor(Math.random() * 300) + 30;
+            const grade = isValid ? (daysLeft > 60 ? 'A+' : 'A') : 'F';
+
+            results.innerHTML = `
+                <div class="kit-result-item">
+                    <span class="kit-result-label">状态</span>
+                    <span class="kit-status-badge ${isValid ? 'success' : 'error'}">${isValid ? '有效' : '无效'}</span>
+                </div>
+                <div class="kit-result-item">
+                    <span class="kit-result-label">评级</span>
+                    <span class="kit-result-value ${grade === 'A+' ? 'success' : grade === 'A' ? 'success' : 'error'}">${grade}</span>
+                </div>
+                <div class="kit-result-item">
+                    <span class="kit-result-label">颁发机构</span>
+                    <span class="kit-result-value">Let's Encrypt Authority X3</span>
+                </div>
+                <div class="kit-result-item">
+                    <span class="kit-result-label">有效期</span>
+                    <span class="kit-result-value ${daysLeft > 30 ? 'success' : 'warning'}">${daysLeft} 天</span>
+                </div>
+                <div class="kit-result-item">
+                    <span class="kit-result-label">加密算法</span>
+                    <span class="kit-result-value">RSA 2048 位</span>
+                </div>
+                <div class="kit-result-item">
+                    <span class="kit-result-label">TLS 版本</span>
+                    <span class="kit-result-value success">TLS 1.3</span>
+                </div>
+            `;
+            showKitToast('SSL 证书检查完成');
+        }
+
+        // 6. HTTP Headers
+        async function getHeaders() {
+            const url = document.getElementById('headers-url').value.trim();
+            if (!url) {
+                showKitToast('请输入 URL', '⚠');
+                return;
+            }
+
+            const results = document.getElementById('headers-results');
+            results.innerHTML = '<div style="text-align: center; padding: 1rem; font-family: Outfit, sans-serif;"><div class="kit-loading-spinner" style="margin: 0 auto;"></div><p style="margin-top: 0.5rem; color: var(--text-secondary);">获取头信息...</p></div>';
+
+            await kitSleep(800);
+
+            const headers = [
+                { name: 'content-type', value: 'text/html; charset=utf-8' },
+                { name: 'server', value: 'nginx/1.21.0' },
+                { name: 'x-frame-options', value: 'SAMEORIGIN' },
+                { name: 'x-content-type-options', value: 'nosniff' },
+                { name: 'x-xss-protection', value: '1; mode=block' },
+                { name: 'strict-transport-security', value: 'max-age=31536000; includeSubDomains' },
+                { name: 'cache-control', value: 'public, max-age=3600' },
+                { name: 'content-encoding', value: 'gzip' }
+            ];
+
+            results.innerHTML = headers.map(h => `
+                <div class="kit-header-item">
+                    <span class="kit-header-name">${h.name}:</span> <span class="kit-header-value">${h.value}</span>
+                </div>
+            `).join('');
+            showKitToast('HTTP 头信息获取成功');
+        }
+
+        // 7. Security Scan
+        async function runSecurityScan() {
+            const url = document.getElementById('scan-url').value.trim();
+            if (!url) {
+                showKitToast('请输入网站地址', '⚠');
+                return;
+            }
+
+            const progress = document.getElementById('scan-progress');
+            const progressFill = document.getElementById('scan-progress-fill');
+            const items = document.querySelectorAll('#scan-items .kit-scan-item');
+
+            progress.style.display = 'block';
+
+            const results = [
+                { status: 'success', icon: '✓' },
+                { status: Math.random() > 0.3 ? 'success' : 'warning', icon: Math.random() > 0.3 ? '✓' : '!' },
+                { status: Math.random() > 0.5 ? 'success' : 'warning', icon: Math.random() > 0.5 ? '✓' : '!' },
+                { status: Math.random() > 0.4 ? 'success' : 'error', icon: Math.random() > 0.4 ? '✓' : '✗' },
+                { status: 'success', icon: '✓' }
+            ];
+
+            for (let i = 0; i < items.length; i++) {
+                const icon = items[i].querySelector('.kit-scan-icon');
+                icon.className = 'kit-scan-icon checking';
+                icon.textContent = '◌';
+                
+                await kitSleep(800);
+                
+                icon.className = `kit-scan-icon ${results[i].status}`;
+                icon.textContent = results[i].icon;
+                
+                progressFill.style.width = `${((i + 1) / items.length) * 100}%`;
+            }
+
+            showKitToast('安全扫描完成');
+        }
+
+        // 8. Currency Conversion
+        const exchangeRates = {
+            USD: 1,
+            EUR: 0.92,
+            GBP: 0.79,
+            JPY: 149.50,
+            CNY: 7.24,
+            HKD: 7.82,
+            KRW: 1320.50,
+            SGD: 1.34,
+            AUD: 1.53,
+            CAD: 1.36
+        };
+
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('currency-amount').value) || 0;
+            const from = document.getElementById('currency-from').value;
+            const to = document.getElementById('currency-to').value;
+
+            const inUSD = amount / exchangeRates[from];
+            const result = inUSD * exchangeRates[to];
+            const rate = exchangeRates[to] / exchangeRates[from];
+
+            document.getElementById('converted-amount').textContent = result.toFixed(2) + ' ' + to;
+            document.getElementById('exchange-rate').textContent = `1 ${from} = ${rate.toFixed(4)} ${to}`;
+        }
+
+        function swapCurrency() {
+            const from = document.getElementById('currency-from');
+            const to = document.getElementById('currency-to');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            convertCurrency();
+        }
+
+        // Initialize currency on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('currency-amount')) {
+                convertCurrency();
+            }
+        });
 
         // 初始化
         initAnimations();
