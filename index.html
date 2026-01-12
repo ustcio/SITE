@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGI Era</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1166,6 +1167,119 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Visitor Counter */
+        .visitor-counter {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem 4rem;
+            border-top: 1px solid var(--border);
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.02) 100%);
+        }
+
+        .visitor-counter-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .visitor-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: iconGlow 3s ease-in-out infinite;
+        }
+
+        .visitor-icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background: inherit;
+            filter: blur(10px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .visitor-icon svg {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        @keyframes iconGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
+        }
+
+        .visitor-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .visitor-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        .visitor-count-wrapper {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .visitor-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .visitor-suffix {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .visitor-live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: livePulse 2s ease-in-out infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .visitor-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--border);
+            margin: 0 1rem;
+        }
+
         /* Footer */
         footer {
             padding: 3rem 4rem;
@@ -1249,6 +1363,28 @@
                 flex-direction: column;
                 gap: 1.5rem;
                 text-align: center;
+            }
+
+            .visitor-counter {
+                padding: 1.5rem;
+            }
+
+            .visitor-counter-inner {
+                gap: 1rem;
+            }
+
+            .visitor-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .visitor-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .visitor-count {
+                font-size: 1.5rem;
             }
         }
 
@@ -3552,6 +3688,36 @@ console.log(response.text);</code>
         </div>
     </div>
 
+    <!-- Visitor Counter Section -->
+    <div class="visitor-counter">
+        <div class="visitor-counter-inner">
+            <div class="visitor-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            <div class="visitor-info">
+                <span class="visitor-label">Total Visitors</span>
+                <div class="visitor-count-wrapper">
+                    <span class="visitor-count" id="visitor-uv">--</span>
+                    <span class="visitor-suffix">people</span>
+                    <div class="visitor-live-dot" title="Live"></div>
+                </div>
+            </div>
+            <div class="visitor-divider"></div>
+            <div class="visitor-info">
+                <span class="visitor-label">Total Views</span>
+                <div class="visitor-count-wrapper">
+                    <span class="visitor-count" id="visitor-pv">--</span>
+                    <span class="visitor-suffix">views</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-content">
             <div class="footer-links">
@@ -3569,6 +3735,97 @@ console.log(response.text);</code>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ==================== API 配置 ====================
         const API_BASE = 'https://api.agiera.net';
+
+        // ==================== 访客统计功能 ====================
+        async function initVisitorCounter() {
+            const uvEl = document.getElementById('visitor-uv');
+            const pvEl = document.getElementById('visitor-pv');
+            
+            if (!uvEl || !pvEl) return;
+
+            try {
+                // 记录访问并获取统计数据
+                const response = await fetch(`${API_BASE}/stats/visit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        page: window.location.pathname,
+                        referrer: document.referrer || null,
+                        userAgent: navigator.userAgent
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // 动画显示数字
+                    animateCounter(uvEl, data.uv || 0);
+                    animateCounter(pvEl, data.pv || 0);
+                } else {
+                    // 如果POST失败，尝试GET获取统计
+                    await fetchVisitorStats();
+                }
+            } catch (error) {
+                console.error('Failed to record visit:', error);
+                // 尝试只获取统计数据
+                await fetchVisitorStats();
+            }
+        }
+
+        async function fetchVisitorStats() {
+            const uvEl = document.getElementById('visitor-uv');
+            const pvEl = document.getElementById('visitor-pv');
+            
+            try {
+                const response = await fetch(`${API_BASE}/stats/visitor`);
+                if (response.ok) {
+                    const data = await response.json();
+                    animateCounter(uvEl, data.uv || 0);
+                    animateCounter(pvEl, data.pv || 0);
+                } else {
+                    uvEl.textContent = '--';
+                    pvEl.textContent = '--';
+                }
+            } catch (error) {
+                console.error('Failed to fetch visitor stats:', error);
+                uvEl.textContent = '--';
+                pvEl.textContent = '--';
+            }
+        }
+
+        function animateCounter(element, target) {
+            if (!element || target === 0) {
+                if (element) element.textContent = target.toLocaleString();
+                return;
+            }
+
+            const duration = 1500;
+            const start = Math.max(0, target - Math.min(100, Math.floor(target * 0.1)));
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // easeOutExpo 缓动函数
+                const easeProgress = 1 - Math.pow(1 - progress, 4);
+                const current = Math.floor(start + (target - start) * easeProgress);
+                
+                element.textContent = current.toLocaleString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        // 页面加载时初始化访客计数器
+        document.addEventListener('DOMContentLoaded', initVisitorCounter);
 
         // ==================== IP检测功能 ====================
         async function detectIP() {
