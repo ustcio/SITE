@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Era</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --text-primary: #fafafa;
+            --text-secondary: #71717a;
+            --accent: #00d4ff;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-pink: #ec4899;
+            --accent-glow: rgba(0, 212, 255, 0.15);
+            --border: rgba(255, 255, 255, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.015;
+            z-index: 1000;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Grid background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Glow orbs */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow-orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .glow-orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+            bottom: 10%;
+            left: -100px;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-cta {
+            padding: 0.625rem 1.5rem;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 100px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-login {
+            padding: 0.625rem 1.25rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .nav-login:hover {
+            color: var(--text-primary);
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.1s backwards;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease 0.3s backwards;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 100px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 4rem;
+            margin-top: 5rem;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Features */
+        .features {
+            padding: 8rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .feature-icon.cyan { background: rgba(0, 212, 255, 0.1); }
+        .feature-icon.purple { background: rgba(139, 92, 246, 0.1); }
+        .feature-icon.green { background: rgba(16, 185, 129, 0.1); }
+        .feature-icon.orange { background: rgba(245, 158, 11, 0.1); }
+        .feature-icon.pink { background: rgba(236, 72, 153, 0.1); }
+
+        .feature-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* ==================== ChatBot 页面样式 ==================== */
+        .chatbot-hero {
+            padding: 8rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .chatbot-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .chatbot-hero p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .chatbot-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .chatbot-window {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .chatbot-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        .chatbot-header-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chatbot-header-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .chatbot-header-dot.red { background: #ff5f56; }
+        .chatbot-header-dot.yellow { background: #ffbd2e; }
+        .chatbot-header-dot.green { background: #27ca40; }
+
+        .chatbot-header-title {
+            flex: 1;
+            text-align: center;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .chatbot-header-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--accent-green);
+        }
+
+        .chatbot-header-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .chatbot-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chatbot-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 85%;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .chat-message:not(.user) .chat-avatar {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            color: white;
+        }
+
+        .chat-message.user .chat-avatar {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .chat-bubble {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0.875rem 1.125rem;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            border: none;
+        }
+
+        .chat-bubble p {
+            font-size: 0.9375rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .chat-message.user .chat-bubble p {
+            color: white;
+        }
+
+        .chat-typing {
+            display: flex;
+            gap: 4px;
+            padding: 0.5rem 0;
+        }
+
+        .chat-typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
+        .chatbot-input {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.875rem 1rem;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9375rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .chatbot-input input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .chatbot-input input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .chatbot-input button {
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chatbot-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .chatbot-input button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ==================== Kit 页面样式 ==================== */
+        .kit-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .kit-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .kit-hero > p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 3rem;
+        }
+
+        .ip-detector-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .ip-display {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .ip-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .ip-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .ip-address {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            word-break: break-all;
+        }
+
+        .ip-address.loading {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .ip-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .ip-detail-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .ip-detail-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .ip-detail-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .ip-refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .ip-refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .ip-refresh-btn.loading svg {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ==================== Research 页面样式 ==================== */
+        .research-hero {
+            padding: 10rem 4rem 4rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .research-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .research-hero p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+        }
+
+        .research-section {
+            padding: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .paper-card {
+            display: flex;
+            gap: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .paper-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .paper-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .paper-content h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .paper-meta {
+            display: flex;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .paper-content p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* ==================== About 页面样式 ==================== */
+        .about-hero {
+            padding: 10rem 4rem 4rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-hero p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .about-section {
+            padding: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            z-index: 10000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            nav { padding: 1rem 2rem; }
+            .nav-links { gap: 1.5rem; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .ip-details { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; gap: 1rem; }
+            .nav-links { 
+                order: 3; 
+                width: 100%; 
+                justify-content: center; 
+                gap: 1rem; 
+                padding-top: 1rem; 
+                border-top: 1px solid var(--border); 
+            }
+            .features-grid { grid-template-columns: 1fr; }
+            .stats { flex-direction: column; gap: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .chatbot-messages { height: 400px; }
+            .ip-address { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- Navigation: Home / Research / ChatBot / Kit / About -->
+    <nav>
+        <div class="logo" onclick="showPage('home')">
+            <div class="logo-icon">◈</div>
+            AGI Era
+        </div>
+        <ul class="nav-links">
+            <li><a class="active" data-page="home" onclick="showPage('home')">Home</a></li>
+            <li><a data-page="research" onclick="showPage('research')">Research</a></li>
+            <li><a data-page="chatbot" onclick="showPage('chatbot')">ChatBot</a></li>
+            <li><a data-page="kit" onclick="showPage('kit')">Kit</a></li>
+            <li><a data-page="about" onclick="showPage('about')">About</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="nav-login" onclick="showToast('Login coming soon!')">Log In</button>
+            <button class="nav-cta" onclick="showToast('Sign up coming soon!')">Sign Up</button>
+        </div>
+    </nav>
+
+    <!-- ==================== Home Page ==================== -->
+    <div class="page active" id="page-home">
+        <section class="hero">
+            <div class="hero-badge">
+                <span>Now Available: AGI Era v2.0</span>
+            </div>
+            <h1>Build the Future with<br><span class="gradient">Artificial General Intelligence</span></h1>
+            <p>The most advanced AI platform for developers and enterprises. Create, deploy, and scale intelligent applications with unprecedented capabilities.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="showPage('chatbot')">
+                    Try ChatBot
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="btn-secondary" onclick="showPage('research')">
+                    View Research
+                </button>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value">99.9%</div>
+                    <div class="stat-label">Uptime SLA</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50M+</div>
+                    <div class="stat-label">API Calls Daily</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">10K+</div>
+                    <div class="stat-label">Developers</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="section-header">
+                <h2>Built for the AI-First Era</h2>
+                <p>Everything you need to build intelligent applications that understand, reason, and create.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon cyan">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Sub-100ms response times with our globally distributed inference network.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon purple">🧠</div>
+                    <h3>Advanced Reasoning</h3>
+                    <p>Multi-step reasoning and complex problem-solving capabilities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon green">🔒</div>
+                    <h3>Enterprise Security</h3>
+                    <p>SOC 2 Type II certified with end-to-end encryption.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon orange">🔌</div>
+                    <h3>Simple Integration</h3>
+                    <p>REST APIs and SDKs for Python, JavaScript, Go, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon pink">📊</div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Monitor usage, performance, and costs with detailed dashboards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon cyan">🌐</div>
+                    <h3>Global Scale</h3>
+                    <p>Deploy to 30+ regions with automatic failover and load balancing.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== Research Page ==================== -->
+    <div class="page" id="page-research">
+        <section class="research-hero">
+            <h1>Research</h1>
+            <p>Advancing the frontier of AI capabilities and safety through rigorous scientific research.</p>
+        </section>
+
+        <section class="research-section">
+            <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                <h2>Recent Publications</h2>
+            </div>
+            
+            <div class="paper-card">
+                <div class="paper-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                </div>
+                <div class="paper-content">
+                    <h3>Scaling Laws for Neural Language Models</h3>
+                    <div class="paper-meta">
+                        <span>March 2024</span>
+                        <span>•</span>
+                        <span>Chen et al.</span>
+                    </div>
+                    <p>We investigate the scaling properties of language model performance on downstream tasks. Our findings reveal predictable relationships between compute, data, and model performance.</p>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                </div>
+                <div class="paper-content">
+                    <h3>Constitutional AI: Harmlessness from AI Feedback</h3>
+                    <div class="paper-meta">
+                        <span>February 2024</span>
+                        <span>•</span>
+                        <span>Wang et al.</span>
+                    </div>
+                    <p>A novel approach to training AI systems that are helpful, harmless, and honest using AI-generated feedback based on a set of principles.</p>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                </div>
+                <div class="paper-content">
+                    <h3>Multi-Modal Learning for AGI Systems</h3>
+                    <div class="paper-meta">
+                        <span>January 2024</span>
+                        <span>•</span>
+                        <span>Liu et al.</span>
+                    </div>
+                    <p>Exploring unified architectures that can process and reason across text, images, audio, and structured data simultaneously.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== ChatBot Page ==================== -->
+    <div class="page" id="page-chatbot">
+        <section class="chatbot-hero">
+            <h1>AI <span class="gradient">ChatBot</span></h1>
+            <p>Experience the power of advanced AI. Ask anything and get intelligent responses powered by Qwen.</p>
+        </section>
+
+        <div class="chatbot-container">
+            <div class="chatbot-window">
+                <div class="chatbot-header">
+                    <div class="chatbot-header-dots">
+                        <div class="chatbot-header-dot red"></div>
+                        <div class="chatbot-header-dot yellow"></div>
+                        <div class="chatbot-header-dot green"></div>
+                    </div>
+                    <div class="chatbot-header-title">AGI Era Assistant</div>
+                    <div class="chatbot-header-status">Online</div>
+                </div>
+                
+                <div class="chatbot-messages" id="chatbot-messages">
+                    <div class="chat-message">
+                        <div class="chat-avatar">◈</div>
+                        <div class="chat-bubble">
+                            <p>Hello! I'm AGI Era's AI assistant powered by Qwen. I can help you with coding, analysis, creative writing, and much more. What would you like to explore today?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chatbot-input">
+                    <input type="text" id="chatbot-input" placeholder="Type your message..." onkeypress="handleChatKeypress(event)">
+                    <button id="chatbot-send-btn" onclick="sendChatMessage()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Kit Page - IP Detection ==================== -->
+    <div class="page" id="page-kit">
+        <section class="kit-hero">
+            <h1>Network <span class="gradient">Kit</span></h1>
+            <p>Instantly detect your IP address and network information. A useful tool for developers and network administrators.</p>
+            
+            <div class="ip-detector-card">
+                <div class="ip-display">
+                    <div class="ip-icon">🌐</div>
+                    <div class="ip-label">Your IP Address</div>
+                    <div class="ip-address loading" id="ip-address">Detecting...</div>
+                </div>
+                
+                <div class="ip-details" id="ip-details">
+                    <div class="ip-detail-item">
+                        <div class="ip-detail-label">Country</div>
+                        <div class="ip-detail-value" id="ip-country">--</div>
+                    </div>
+                    <div class="ip-detail-item">
+                        <div class="ip-detail-label">Region</div>
+                        <div class="ip-detail-value" id="ip-region">--</div>
+                    </div>
+                    <div class="ip-detail-item">
+                        <div class="ip-detail-label">City</div>
+                        <div class="ip-detail-value" id="ip-city">--</div>
+                    </div>
+                    <div class="ip-detail-item">
+                        <div class="ip-detail-label">ISP</div>
+                        <div class="ip-detail-value" id="ip-isp">--</div>
+                    </div>
+                    <div class="ip-detail-item">
+                        <div class="ip-detail-label">Timezone</div>
+                        <div class="ip-detail-value" id="ip-timezone">--</div>
+                    </div>
+                    <div class="ip-detail-item">
+                        <div class="ip-detail-label">Coordinates</div>
+                        <div class="ip-detail-value" id="ip-coords">--</div>
+                    </div>
+                </div>
+
+                <button class="ip-refresh-btn" id="ip-refresh-btn" onclick="detectIP()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 4v6h-6M1 20v-6h6"/>
+                        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                    </svg>
+                    Refresh
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== About Page ==================== -->
+    <div class="page" id="page-about">
+        <section class="about-hero">
+            <h1>Building Responsible AGI</h1>
+            <p>We're on a mission to develop artificial general intelligence that benefits humanity. Our team combines world-class AI research with a deep commitment to safety and ethics.</p>
+        </section>
+
+        <section class="about-section">
+            <div class="section-header">
+                <h2>Our Values</h2>
+                <p>The principles that guide our work</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon cyan">🎯</div>
+                    <h3>Safety First</h3>
+                    <p>We prioritize the safe development of AI above all else, investing heavily in alignment research.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon purple">🔬</div>
+                    <h3>Scientific Rigor</h3>
+                    <p>We publish our research openly and subject our work to peer review.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon green">🤝</div>
+                    <h3>Collaboration</h3>
+                    <p>We work with governments, academia, and industry to establish best practices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon orange">💡</div>
+                    <h3>Innovation</h3>
+                    <p>We push the boundaries of what's possible while maintaining our commitment to responsible development.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon pink">🌍</div>
+                    <h3>Global Impact</h3>
+                    <p>We build technology that can benefit people everywhere, not just in wealthy nations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon cyan">👥</div>
+                    <h3>Diversity</h3>
+                    <p>We believe diverse perspectives lead to better AI systems that work for everyone.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ==================== 配置 ====================
+        // 后端API地址 - 替换为您的 Cloudflare Worker URL
+        const API_BASE = 'https://api.agiera.net';  // 或 https://agi-era-api.xxx.workers.dev
+
+        // ==================== 页面导航 ====================
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) targetPage.classList.add('active');
+            
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageId) link.classList.add('active');
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // 进入Kit页面时检测IP
+            if (pageId === 'kit') detectIP();
+        }
+
+        // ==================== IP检测功能 ====================
+        async function detectIP() {
+            const ipEl = document.getElementById('ip-address');
+            const refreshBtn = document.getElementById('ip-refresh-btn');
+            
+            ipEl.textContent = 'Detecting...';
+            ipEl.classList.add('loading');
+            if (refreshBtn) refreshBtn.classList.add('loading');
+            
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                ipEl.textContent = data.ip;
+                ipEl.classList.remove('loading');
+                
+                // 处理国家显示：台湾、香港、澳门显示为中国
+                let countryName = data.country_name || '--';
+                const chinaRegions = ['TW', 'HK', 'MO'];
+                if (chinaRegions.includes(data.country_code)) {
+                    countryName = 'China';
+                }
+                
+                // 处理地区显示
+                let regionName = data.region || '--';
+                if (data.country_code === 'TW') {
+                    regionName = 'Taiwan, ' + regionName;
+                } else if (data.country_code === 'HK') {
+                    regionName = 'Hong Kong SAR';
+                } else if (data.country_code === 'MO') {
+                    regionName = 'Macao SAR';
+                }
+                
+                document.getElementById('ip-country').textContent = countryName;
+                document.getElementById('ip-region').textContent = regionName;
+                document.getElementById('ip-city').textContent = data.city || '--';
+                document.getElementById('ip-isp').textContent = data.org || '--';
+                document.getElementById('ip-timezone').textContent = data.timezone || '--';
+                document.getElementById('ip-coords').textContent = 
+                    data.latitude && data.longitude ? `${data.latitude}, ${data.longitude}` : '--';
+                
+            } catch (error) {
+                console.error('IP detection error:', error);
+                ipEl.textContent = 'Unable to detect';
+                ipEl.classList.remove('loading');
+            } finally {
+                if (refreshBtn) refreshBtn.classList.remove('loading');
+            }
+        }
+
+        // ==================== ChatBot功能 ====================
+        let isWaitingResponse = false;
+
+        function handleChatKeypress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendChatMessage();
+            }
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatbot-input');
+            const sendBtn = document.getElementById('chatbot-send-btn');
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const message = input.value.trim();
+            
+            if (!message || isWaitingResponse) return;
+            
+            isWaitingResponse = true;
+            sendBtn.disabled = true;
+            input.value = '';
+            
+            // 添加用户消息
+            addChatMessage(message, 'user');
+            
+            // 添加加载动画
+            const typingEl = document.createElement('div');
+            typingEl.className = 'chat-message';
+            typingEl.id = 'typing-indicator';
+            typingEl.innerHTML = `
+                <div class="chat-avatar">◈</div>
+                <div class="chat-bubble">
+                    <div class="chat-typing">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(typingEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            try {
+                // 调用后端API（通过Cloudflare Worker代理通义千问）
+                const response = await fetch(`${API_BASE}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                
+                const data = await response.json();
+                
+                // 移除加载动画
+                document.getElementById('typing-indicator')?.remove();
+                
+                if (data.success) {
+                    addChatMessage(data.reply, 'bot');
+                } else {
+                    addChatMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                }
+            } catch (error) {
+                console.error('Chat error:', error);
+                document.getElementById('typing-indicator')?.remove();
+                addChatMessage('Network error. Please check your connection and try again.', 'bot');
+            } finally {
+                isWaitingResponse = false;
+                sendBtn.disabled = false;
+                input.focus();
+            }
+        }
+
+        function addChatMessage(text, type) {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const messageEl = document.createElement('div');
+            messageEl.className = `chat-message ${type === 'user' ? 'user' : ''}`;
+            
+            const avatar = type === 'user' ? 'U' : '◈';
+            messageEl.innerHTML = `
+                <div class="chat-avatar">${avatar}</div>
+                <div class="chat-bubble">
+                    <p>${escapeHtml(text)}</p>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ==================== Toast提示 ====================
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // 页面加载完成
+            console.log('AGI Era loaded successfully');
+        });
+    </script>
+</body>
+</html>
