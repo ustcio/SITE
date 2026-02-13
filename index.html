@@ -14664,7 +14664,8 @@ const renderer = new THREE.WebGLRenderer({
     alpha: true 
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(window.devicePixelRatio);  // ← 改动2: 放开pixelRatio限制
+
 document.getElementById('liquid-glass-canvas').appendChild(renderer.domElement);
 
 // Scenes
@@ -14680,8 +14681,8 @@ const rtParams = {
     format: THREE.RGBAFormat 
 };
 const rtBg = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);
-const rtBlurA = new THREE.WebGLRenderTarget(window.innerWidth/2, window.innerHeight/2, rtParams);
-const rtBlurB = new THREE.WebGLRenderTarget(window.innerWidth/2, window.innerHeight/2, rtParams);
+const rtBlurA = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);  // ← 改动1: 全分辨率
+const rtBlurB = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);  // ← 改动1: 全分辨率
 
 // Background orbs
 const bgGroup = new THREE.Group();
@@ -14738,10 +14739,6 @@ const glassFrag = `
     varying vec3 vNormal;
     varying vec3 vViewPosition;
     
-    float rand(vec2 co){
-        return fract(sin(dot(co.xy, vec2(12.9898,78.233))) * 43758.5453);
-    }
-    
     void main() {
         vec2 screenUV = gl_FragCoord.xy / uResolution;
         vec2 offset = vNormal.xy * uRefractPower;
@@ -14757,9 +14754,7 @@ const glassFrag = `
         float fresnel = pow(1.0 - abs(dot(viewDir, vNormal)), 3.0);
         color += vec3(1.0) * fresnel * 0.3;
         
-        // Grain
-        float noise = (rand(screenUV * uTime * 0.1) - 0.5) * 0.03;
-        color += noise;
+        // ← 改动3: 去掉 grain 噪点，避免像素颗粒感
         
         gl_FragColor = vec4(color, 1.0);
     }
@@ -14814,7 +14809,7 @@ const blurFrag = `
 const blurMat = new THREE.ShaderMaterial({
     uniforms: {
         tDiffuse: { value: null },
-        uResolution: { value: new THREE.Vector2(window.innerWidth/2, window.innerHeight/2) },
+        uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },  // ← 改动1: 全分辨率
         uDirection: { value: new THREE.Vector2(1, 0) }
     },
     vertexShader: blurVert,
@@ -14896,11 +14891,11 @@ window.addEventListener('resize', () => {
     renderer.setSize(w, h);
     
     rtBg.setSize(w, h);
-    rtBlurA.setSize(w/2, h/2);
-    rtBlurB.setSize(w/2, h/2);
+    rtBlurA.setSize(w, h);    // ← 改动1: 全分辨率
+    rtBlurB.setSize(w, h);    // ← 改动1: 全分辨率
     
     glassMat.uniforms.uResolution.value.set(w, h);
-    blurMat.uniforms.uResolution.value.set(w/2, h/2);
+    blurMat.uniforms.uResolution.value.set(w, h);  // ← 改动1: 全分辨率
 });
 
 animate();
