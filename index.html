@@ -14664,7 +14664,9 @@ const renderer = new THREE.WebGLRenderer({
     alpha: true 
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);  // ← 改动2: 放开pixelRatio限制
+
+// ✅ 放开 pixelRatio（高分屏更细腻）
+renderer.setPixelRatio(window.devicePixelRatio);
 
 document.getElementById('liquid-glass-canvas').appendChild(renderer.domElement);
 
@@ -14678,11 +14680,16 @@ camera.position.z = 5;
 const rtParams = { 
     minFilter: THREE.LinearFilter, 
     magFilter: THREE.LinearFilter, 
-    format: THREE.RGBAFormat 
+    format: THREE.RGBAFormat,
+    depthBuffer: false,   // ✅ 可选：后处理不需要深度
+    stencilBuffer: false  // ✅ 可选：后处理不需要模板
 };
+
 const rtBg = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);
-const rtBlurA = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);  // ← 改动1: 全分辨率
-const rtBlurB = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);  // ← 改动1: 全分辨率
+
+// ✅ Blur RT 从半分辨率改为全分辨率（最关键）
+const rtBlurA = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);
+const rtBlurB = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);
 
 // Background orbs
 const bgGroup = new THREE.Group();
@@ -14739,6 +14746,10 @@ const glassFrag = `
     varying vec3 vNormal;
     varying vec3 vViewPosition;
     
+    float rand(vec2 co){
+        return fract(sin(dot(co.xy, vec2(12.9898,78.233))) * 43758.5453);
+    }
+    
     void main() {
         vec2 screenUV = gl_FragCoord.xy / uResolution;
         vec2 offset = vNormal.xy * uRefractPower;
@@ -14754,7 +14765,9 @@ const glassFrag = `
         float fresnel = pow(1.0 - abs(dot(viewDir, vNormal)), 3.0);
         color += vec3(1.0) * fresnel * 0.3;
         
-        // ← 改动3: 去掉 grain 噪点，避免像素颗粒感
+        // ✅ Grain：大幅减弱（如果你想完全去掉，把下面两行删掉即可）
+        float noise = (rand(screenUV * uTime * 0.1) - 0.5) * 0.005;
+        color += noise;
         
         gl_FragColor = vec4(color, 1.0);
     }
@@ -14809,7 +14822,10 @@ const blurFrag = `
 const blurMat = new THREE.ShaderMaterial({
     uniforms: {
         tDiffuse: { value: null },
-        uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },  // ← 改动1: 全分辨率
+
+        // ✅ uResolution 改为全分辨率
+        uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+
         uDirection: { value: new THREE.Vector2(1, 0) }
     },
     vertexShader: blurVert,
@@ -14885,17 +14901,22 @@ function animate() {
 window.addEventListener('resize', () => {
     const w = window.innerWidth;
     const h = window.innerHeight;
+
+    // ✅ resize 时也更新 pixelRatio（用户拖到不同 DPR 屏幕时更稳）
+    renderer.setPixelRatio(window.devicePixelRatio);
     
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
     
     rtBg.setSize(w, h);
-    rtBlurA.setSize(w, h);    // ← 改动1: 全分辨率
-    rtBlurB.setSize(w, h);    // ← 改动1: 全分辨率
+
+    // ✅ Blur RT 全分辨率
+    rtBlurA.setSize(w, h);
+    rtBlurB.setSize(w, h);
     
     glassMat.uniforms.uResolution.value.set(w, h);
-    blurMat.uniforms.uResolution.value.set(w, h);  // ← 改动1: 全分辨率
+    blurMat.uniforms.uResolution.value.set(w, h);
 });
 
 animate();
@@ -14904,6 +14925,3 @@ console.log('✨ Liquid Glass WebGL initialized successfully');
 </script>
 
 <!-- ==================== END WEBGL BACKGROUND ==================== -->
-
-</body>
-</html>
