@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Era - Ultimate Liquid Glass OS</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts-d-gstatic-d-com-s-gmn.v.tuangouai.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <style>
+        /* === 核心样式重置 === */
+        :root {
+            --glass-bg: rgba(20, 20, 20, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-blur: 40px;
+            --accent: #2997ff;
+            --text-primary: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: var(--text-primary);
+            font-family: 'SF Pro Display', 'Outfit', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* 隐藏原来的背景干扰 */
+        .grid-bg, .glow-orb { display: none !important; }
+
+        /* WebGL 画布层：置于最底层 */
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* === Apple 风格玻璃组件 === */
+        .glass-panel, 
+        .nav-glass-container, 
+        .feature-card, 
+        .kit-tool-window, 
+        .chatbot-window,
+        .modal, .admin-modal,
+        input, button {
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            border: 1px solid var(--glass-border) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+
+        /* 交互高亮 */
+        .feature-card:hover, .kit-tool-window:hover {
+            transform: translateY(-5px) scale(1.01);
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4) !important;
+        }
+
+        /* === 布局与排版 (保留原逻辑结构) === */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            padding: 1.5rem 0;
+            display: flex; justify-content: center;
+        }
+        .nav-glass-container {
+            width: 90%; max-width: 1200px;
+            padding: 0.8rem 2rem;
+            border-radius: 100px !important;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; padding: 0; margin: 0; }
+        .nav-links a { 
+            color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; cursor: pointer; position: relative;
+        }
+        .nav-links a.active, .nav-links a:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        
+        .page { display: none; padding-top: 100px; min-height: 100vh; }
+        .page.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero { 
+            text-align: center; margin-top: 10vh; display: flex; flex-direction: column; align-items: center;
+        }
+        .hero h1 { 
+            font-size: 5rem; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1.2rem; color: rgba(255,255,255,0.6); max-width: 600px; margin-bottom: 3rem; }
+
+        .stats { display: flex; gap: 2rem; margin-top: 4rem; }
+        .stat-item { padding: 1.5rem 3rem; border-radius: 20px !important; text-align: center; }
+        .stat-value { font-size: 2.5rem; font-weight: 700; }
+        .stat-label { font-size: 0.9rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Kit Tools Grid */
+        .kit-tools-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px; padding: 40px 10%;
+        }
+        .kit-tool-window {
+            border-radius: 24px !important; padding: 20px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        .kit-btn-primary {
+            width: 100%; padding: 12px; border-radius: 12px !important;
+            border: none; background: #fff !important; color: #000; font-weight: 600; cursor: pointer;
+        }
+
+        /* Admin & Modals */
+        .admin-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .admin-modal-overlay.active { display: flex; }
+        .admin-modal { padding: 40px; border-radius: 30px !important; width: 400px; }
+        .admin-input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px !important; color: white; }
+
+        /* Chatbot */
+        .chatbot-container { max-width: 800px; margin: 0 auto; height: 70vh; display: flex; flex-direction: column; }
+        .chatbot-window { flex: 1; display: flex; flex-direction: column; border-radius: 30px !important; overflow: hidden; }
+        .chatbot-messages { flex: 1; padding: 20px; overflow-y: auto; }
+        .chatbot-input { padding: 20px; display: flex; gap: 10px; border-top: 1px solid var(--glass-border); }
+        .chatbot-input input { flex: 1; padding: 15px; border-radius: 100px !important; border: none; }
+
+    </style>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <nav>
+        <div class="nav-glass-container">
+            <div class="logo" style="font-weight: 700; font-size: 1.2rem;">AGI Era OS</div>
+            <ul class="nav-links">
+                <li><a class="active" onclick="showPage('home')">Home</a></li>
+                <li><a onclick="showPage('kit')">Kit</a></li>
+                <li><a onclick="showPage('chatbot')">Chat</a></li>
+                <li><a onclick="openAdmin()">Admin</a></li>
+            </ul>
+            <button class="kit-btn-primary" style="width: auto; padding: 8px 20px;" onclick="openAdmin()">Login</button>
+        </div>
+    </nav>
+
+    <div class="page active" id="page-home">
+        <section class="hero">
+            <h1>Liquid Glass<br>Interface</h1>
+            <p>Experience the next generation of spatial web design. Powered by custom WebGL shader pipelines.</p>
+            <div style="display: flex; gap: 15px;">
+                <button class="kit-btn-primary" style="width: 160px;" onclick="showPage('kit')">Launch Kit</button>
+                <button class="kit-btn-primary" style="width: 160px; background: rgba(255,255,255,0.1)!important; color:white; border:1px solid rgba(255,255,255,0.2)!important;" onclick="showPage('chatbot')">AI Chat</button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item glass-panel">
+                    <div class="stat-value">60</div>
+                    <div class="stat-label">FPS</div>
+                </div>
+                <div class="stat-item glass-panel">
+                    <div class="stat-value">26</div>
+                    <div class="stat-label">Tools</div>
+                </div>
+                <div class="stat-item glass-panel">
+                    <div class="stat-value">4K</div>
+                    <div class="stat-label">HDR</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="page" id="page-kit">
+        <div class="hero" style="margin-top: 5vh; min-height: auto;">
+            <h1>Super Kit</h1>
+        </div>
+        <div class="kit-tools-grid">
+            <div class="kit-tool-window">
+                <h3>⚡ Speed Test</h3>
+                <div style="font-size: 2rem; font-weight: 700; margin: 20px 0; color: #2997ff;" id="speed-val">-- Mbps</div>
+                <button class="kit-btn-primary" onclick="runTool('speed')">Start</button>
+            </div>
+            <div class="kit-tool-window">
+                <h3>🌐 IP Detect</h3>
+                <div style="margin: 20px 0; opacity: 0.8;" id="ip-val">Waiting...</div>
+                <button class="kit-btn-primary" onclick="runTool('ip')">Detect</button>
+            </div>
+             <div class="kit-tool-window">
+                <h3>🔐 Password</h3>
+                <div style="margin: 20px 0; word-break: break-all; font-family: monospace;" id="pass-val">********</div>
+                <button class="kit-btn-primary" onclick="runTool('pass')">Generate</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-chatbot">
+        <div class="chatbot-container" style="margin-top: 80px;">
+            <div class="chatbot-window">
+                <div class="chatbot-messages" id="chat-box">
+                    <div style="background: rgba(255,255,255,0.1); padding: 10px 15px; border-radius: 15px; display: inline-block; max-width: 80%;">
+                        Hello! I am running on a refracted liquid layer.
+                    </div>
+                </div>
+                <div class="chatbot-input">
+                    <input type="text" placeholder="Type a message..." id="chat-input">
+                    <button class="kit-btn-primary" style="width: auto;" onclick="sendChat()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-modal-overlay" id="admin-modal">
+        <div class="admin-modal">
+            <h2 style="margin-top: 0;">System Access</h2>
+            <input type="text" class="admin-input" placeholder="Username">
+            <input type="password" class="admin-input" placeholder="Password">
+            <div style="display: flex; gap: 10px;">
+                <button class="kit-btn-primary" onclick="closeAdmin()">Cancel</button>
+                <button class="kit-btn-primary" style="background: #2997ff !important; color: white;">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            document.getElementById('page-'+id).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function openAdmin() { document.getElementById('admin-modal').classList.add('active'); }
+        function closeAdmin() { document.getElementById('admin-modal').classList.remove('active'); }
+
+        function runTool(type) {
+            if(type === 'speed') {
+                document.getElementById('speed-val').innerText = (Math.random()*100 + 50).toFixed(1) + ' Mbps';
+            } else if(type === 'ip') {
+                document.getElementById('ip-val').innerText = '192.168.1.' + Math.floor(Math.random()*255);
+            } else if(type === 'pass') {
+                document.getElementById('pass-val').innerText = Math.random().toString(36).slice(-10).toUpperCase();
+            }
+        }
+
+        function sendChat() {
+            const input = document.getElementById('chat-input');
+            const box = document.getElementById('chat-box');
+            if(!input.value) return;
+            box.innerHTML += `<div style="text-align:right; margin-top:10px;"><span style="background:#2997ff; padding:10px 15px; border-radius:15px; display:inline-block;">${input.value}</span></div>`;
+            input.value = '';
+            setTimeout(() => {
+                box.innerHTML += `<div style="margin-top:10px;"><span style="background:rgba(255,255,255,0.1); padding:10px 15px; border-radius:15px; display:inline-block;">I agree with that!</span></div>`;
+                box.scrollTop = box.scrollHeight;
+            }, 800);
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { SimplexNoise } from 'three/addons/math/SimplexNoise.js';
+
+        // 1. 初始化渲染器
+        const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false }); // Post-processing handles AA usually, but here we keep simple
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // 2. 场景定义
+        const bgScene = new THREE.Scene();      // 背景场景 (粒子/光斑)
+        const mainScene = new THREE.Scene();    // 主场景 (玻璃球)
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = 5;
+
+        // 全屏正交相机 (用于 Blur Pass 处理)
+        const orthoCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const postScene = new THREE.Scene();
+
+        // 3. Render Targets (FBOs)
+        const rtParams = { 
+            minFilter: THREE.LinearFilter, 
+            magFilter: THREE.LinearFilter, 
+            format: THREE.RGBAFormat 
+        };
+        const rtBackground = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, rtParams);
+        const rtBlurA = new THREE.WebGLRenderTarget(window.innerWidth/2, window.innerHeight/2, rtParams); // Downscale for performance
+        const rtBlurB = new THREE.WebGLRenderTarget(window.innerWidth/2, window.innerHeight/2, rtParams);
+
+        // ==========================================
+        // 4. 构建背景 (bgScene)
+        // ==========================================
+        // 创建一些浮动的光球作为背景，以便玻璃有东西可以折射
+        const bgGroup = new THREE.Group();
+        bgScene.add(bgGroup);
+
+        const orbGeometry = new THREE.SphereGeometry(1, 32, 32);
+        const orbMaterial = new THREE.MeshBasicMaterial({ color: 0x2997ff, transparent: true, opacity: 0.6 });
+        
+        for(let i=0; i<5; i++) {
+            const orb = new THREE.Mesh(orbGeometry, new THREE.MeshBasicMaterial({
+                color: i%2==0 ? 0x2997ff : 0xbf5af2,
+                transparent: true, opacity: 0.4,
+                blending: THREE.AdditiveBlending
+            }));
+            orb.position.set((Math.random()-0.5)*10, (Math.random()-0.5)*6, (Math.random()-0.5)*5 - 5);
+            orb.scale.setScalar(1 + Math.random()*2);
+            orb.userData = { speed: Math.random()*0.02, offset: Math.random()*100 };
+            bgGroup.add(orb);
+        }
+
+        // ==========================================
+        // 5. 构建玻璃物体 (mainScene)
+        // ==========================================
+        // Custom Shader Material for Screen Space Refraction
+        const glassVertexShader = `
+            varying vec2 vUv;
+            varying vec3 vNormal;
+            varying vec3 vViewPosition;
+            
+            void main() {
+                vUv = uv;
+                vNormal = normalize(normalMatrix * normal);
+                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                vViewPosition = -mvPosition.xyz;
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `;
+
+        const glassFragmentShader = `
+            uniform sampler2D uTexture;     // Clean Background
+            uniform sampler2D uBlurTexture; // Blurred Background
+            uniform vec2 uResolution;
+            uniform float uTime;
+            uniform float uRefractPower;
+            uniform float uDispersion;
+            uniform float uRadius;
+
+            varying vec2 vUv;
+            varying vec3 vNormal;
+            varying vec3 vViewPosition;
+
+            // Pseudo-random for grain
+            float rand(vec2 co){
+                return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+            }
+
+            void main() {
+                // 1. Screen Space UV
+                vec2 screenUV = gl_FragCoord.xy / uResolution;
+
+                // 2. Refraction based on Normal
+                // Simple approximation: warp screen UV by normal xy
+                vec2 offset = vNormal.xy * uRefractPower;
+
+                // 3. Chromatic Aberration (Dispersion)
+                // Sample Red, Green, Blue at slightly different offsets
+                float r = texture2D(uBlurTexture, screenUV + offset * (1.0 + uDispersion)).r;
+                float g = texture2D(uBlurTexture, screenUV + offset * 1.0).g;
+                float b = texture2D(uBlurTexture, screenUV + offset * (1.0 - uDispersion)).b;
+                vec3 color = vec3(r, g, b);
+
+                // 4. Fresnel Effect (Edge glow)
+                vec3 viewDir = normalize(vViewPosition);
+                float fresnel = pow(1.0 - abs(dot(viewDir, vNormal)), 3.0);
+                
+                // Add Fresnel highlight
+                color += vec3(1.0) * fresnel * 0.4;
+
+                // 5. Grain (Film noise)
+                float noise = (rand(screenUV * uTime) - 0.5) * 0.05;
+                color += noise;
+
+                gl_FragColor = vec4(color, 1.0);
+            }
+        `;
+
+        const glassMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                uTexture: { value: null },
+                uBlurTexture: { value: null },
+                uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                uTime: { value: 0 },
+                uRefractPower: { value: 0.15 },  // 折射强度
+                uDispersion: { value: 0.02 },    // 色散强度
+                uRadius: { value: 1.0 }
+            },
+            vertexShader: glassVertexShader,
+            fragmentShader: glassFragmentShader
+        });
+
+        const geometry = new THREE.IcosahedronGeometry(1.8, 64);
+        const originalPositions = geometry.attributes.position.clone();
+        const sphere = new THREE.Mesh(geometry, glassMaterial);
+        mainScene.add(sphere);
+
+
+        // ==========================================
+        // 6. Blur Shader (Post Processing Quad)
+        // ==========================================
+        const blurVertex = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        const blurFragment = `
+            uniform sampler2D tDiffuse;
+            uniform vec2 uResolution;
+            uniform vec2 uDirection; // (1.0, 0.0) or (0.0, 1.0)
+            varying vec2 vUv;
+
+            // Simple Gaussian weights
+            void main() {
+                vec4 color = vec4(0.0);
+                vec2 off = vec2(1.411764705882353) * uDirection;
+                
+                color += texture2D(tDiffuse, vUv) * 0.1964825501511404;
+                color += texture2D(tDiffuse, vUv + (off / uResolution)) * 0.2969069646728344;
+                color += texture2D(tDiffuse, vUv - (off / uResolution)) * 0.2969069646728344;
+                color += texture2D(tDiffuse, vUv + (off * 2.0 / uResolution)) * 0.0942076256687176;
+                color += texture2D(tDiffuse, vUv - (off * 2.0 / uResolution)) * 0.0942076256687176;
+                
+                gl_FragColor = color;
+            }
+        `;
+
+        const blurMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                tDiffuse: { value: null },
+                uResolution: { value: new THREE.Vector2(window.innerWidth/2, window.innerHeight/2) },
+                uDirection: { value: new THREE.Vector2(1, 0) }
+            },
+            vertexShader: blurVertex,
+            fragmentShader: blurFragment
+        });
+
+        const fullScreenQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), blurMaterial);
+        postScene.add(fullScreenQuad);
+
+        // ==========================================
+        // 7. 渲染循环 (The Render Pipeline)
+        // ==========================================
+        const clock = new THREE.Clock();
+        const simplex = new SimplexNoise();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+
+            // A. 动画更新 (背景球移动)
+            bgGroup.children.forEach(mesh => {
+                mesh.position.x = Math.sin(time * mesh.userData.speed + mesh.userData.offset) * 6;
+                mesh.position.y = Math.cos(time * mesh.userData.speed + mesh.userData.offset) * 4;
+            });
+
+            // B. 液态变形 (更新 Sphere 几何体)
+            const posAttr = geometry.attributes.position;
+            for(let i=0; i<posAttr.count; i++){
+                const v = new THREE.Vector3().fromBufferAttribute(originalPositions, i);
+                const noise = simplex.noise4d(v.x*0.6, v.y*0.6, v.z*0.6, time*0.4);
+                v.multiplyScalar(1 + noise * 0.2);
+                posAttr.setXYZ(i, v.x, v.y, v.z);
+            }
+            geometry.computeVertexNormals();
+            geometry.attributes.position.needsUpdate = true;
+            sphere.rotation.y = time * 0.1;
+
+            // --- RENDER PASSES ---
+
+            // Pass 1: Render Background to rtBackground
+            renderer.setRenderTarget(rtBackground);
+            renderer.clear();
+            renderer.render(bgScene, camera);
+
+            // Pass 2: Horizontal Blur (rtBackground -> rtBlurA)
+            blurMaterial.uniforms.tDiffuse.value = rtBackground.texture;
+            blurMaterial.uniforms.uDirection.value.set(2.0, 0.0); // Increase blur radius
+            renderer.setRenderTarget(rtBlurA);
+            renderer.clear();
+            renderer.render(postScene, orthoCamera);
+
+            // Pass 3: Vertical Blur (rtBlurA -> rtBlurB)
+            blurMaterial.uniforms.tDiffuse.value = rtBlurA.texture;
+            blurMaterial.uniforms.uDirection.value.set(0.0, 2.0);
+            renderer.setRenderTarget(rtBlurB);
+            renderer.clear();
+            renderer.render(postScene, orthoCamera);
+
+            // Pass 4: Final Composition (to Screen)
+            renderer.setRenderTarget(null);
+            renderer.clear();
+            
+            // a. Draw Background first
+            renderer.render(bgScene, camera);
+            
+            // b. Update Glass Shader Uniforms
+            glassMaterial.uniforms.uTexture.value = rtBackground.texture;
+            glassMaterial.uniforms.uBlurTexture.value = rtBlurB.texture; // Use fully blurred texture
+            glassMaterial.uniforms.uTime.value = time;
+            
+            // c. Draw Glass Sphere
+            renderer.render(mainScene, camera);
+        }
+
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+            
+            rtBackground.setSize(width, height);
+            rtBlurA.setSize(width/2, height/2);
+            rtBlurB.setSize(width/2, height/2);
+            
+            glassMaterial.uniforms.uResolution.value.set(width, height);
+            blurMaterial.uniforms.uResolution.value.set(width/2, height/2);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
