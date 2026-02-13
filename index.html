@@ -1,155 +1,258 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Liquid Glass</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Style Liquid Interface</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+            font-family: -apple-system, "SF Pro Display", "SF Pro Text", BlinkMacSystemFont, sans-serif;
+            cursor: grab;
+        }
 
-<style>
-:root{
---bg:#0b0c0f;
---glass:rgba(255,255,255,.08);
---edge:rgba(255,255,255,.25);
---txt:#fff;
---blur:30px;
---radius:22px;
-}
+        /* 模拟 iOS 锁屏界面的极简 UI */
+        .ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
 
-body{
-margin:0;
-background:radial-gradient(circle at top,#141622,#06070a);
-font-family:-apple-system,system-ui;
-color:var(--txt);
-}
+        .header {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
 
-.glass{
-background:var(--glass);
-backdrop-filter:blur(var(--blur)) saturate(180%);
-border-radius:var(--radius);
-border:1px solid var(--edge);
-box-shadow:
-0 30px 80px rgba(0,0,0,.6),
-inset 0 1px 2px rgba(255,255,255,.3);
-}
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+        }
 
-nav{
-position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
-padding:12px 26px;
-display:flex;
-gap:24px;
-}
+        .glass-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-section{
-padding:140px 10vw;
-}
-
-.hero{
-text-align:center;
-}
-
-.card-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:28px;
-margin-top:60px;
-}
-
-.card{
-padding:32px;
-}
-
-button{
-background:rgba(255,255,255,.12);
-border:1px solid rgba(255,255,255,.35);
-color:white;
-padding:12px 26px;
-border-radius:999px;
-cursor:pointer;
-}
-
-footer{
-text-align:center;
-padding:80px 0 40px;
-opacity:.6;
-}
-
-.lang{
-position:fixed;
-right:30px;
-top:30px;
-}
-</style>
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
 </head>
-
 <body>
 
-<nav class="glass">
-<span data-i18n="nav.home"></span>
-<span data-i18n="nav.about"></span>
-<span data-i18n="nav.contact"></span>
-</nav>
+    <div class="ui-layer">
+        <div class="header">
+            <span>System Status</span>
+            <span class="glass-badge">Active</span>
+        </div>
+        <div class="footer">
+            <p>Designed by Intelligence</p>
+        </div>
+    </div>
 
-<div class="lang">
-<button onclick="setLang('zh')">中文</button>
-<button onclick="setLang('en')">EN</button>
-</div>
+    <div id="canvas-container"></div>
 
-<section class="hero">
-<div class="glass" style="padding:60px">
-<h1 data-i18n="hero.title"></h1>
-<p data-i18n="hero.sub"></p>
-</div>
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+        import { OrbitControls } from 'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+        import { RoomEnvironment } from 'https://unpkg.com/three@0.160.0/examples/jsm/environments/RoomEnvironment.js';
+        import { SimplexNoise } from 'https://unpkg.com/three@0.160.0/examples/jsm/math/SimplexNoise.js';
 
-<div class="card-grid">
+        // ==========================================
+        // 1. CANVAS 2D 纹理生成系统 (动态皮肤)
+        // ==========================================
+        const textureWidth = 1024;
+        const textureHeight = 512;
+        const textureCanvas = document.createElement('canvas');
+        textureCanvas.width = textureWidth;
+        textureCanvas.height = textureHeight;
+        const ctx = textureCanvas.getContext('2d');
 
-<div class="glass card">
-<h3 data-i18n="c1"></h3>
-</div>
+        // 将 Canvas 转换为 Three.js 纹理
+        const dynamicTexture = new THREE.CanvasTexture(textureCanvas);
+        dynamicTexture.anisotropy = 16; // 防止倾斜时模糊
 
-<div class="glass card">
-<h3 data-i18n="c2"></h3>
-</div>
+        // 绘制 Canvas 内容的函数 (每一帧都会调用)
+        function drawCanvas(time) {
+            // 清空背景 (黑色 = 不发光)
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, textureWidth, textureHeight);
 
-<div class="glass card">
-<h3 data-i18n="c3"></h3>
-</div>
+            // 绘制中心动态圆环 (类似 Siri 激活状态)
+            const centerX = textureWidth / 2;
+            const centerY = textureHeight / 2;
+            
+            // 环 1
+            ctx.beginPath();
+            ctx.lineWidth = 15;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.5 + Math.sin(time * 2) * 0.3})`;
+            ctx.arc(centerX, centerY, 150 + Math.sin(time) * 10, 0, Math.PI * 2);
+            ctx.stroke();
 
-</div>
-</section>
+            // 环 2 (偏心)
+            ctx.beginPath();
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = `rgba(255, 255, 255, 0.3)`;
+            ctx.arc(centerX + Math.cos(time) * 20, centerY + Math.sin(time) * 20, 120, 0, Math.PI * 2);
+            ctx.stroke();
 
-<footer>
-Powered by 杨浩
-</footer>
+            // 绘制文字
+            ctx.font = 'bold 80px -apple-system, BlinkMacSystemFont';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText('NEURAL', centerX, centerY - 20);
 
-<script>
-const dict={
-zh:{
-nav:{home:"首页",about:"关于",contact:"联系"},
-hero:{title:"终极 Liquid Glass",sub:"macOS 风格液态玻璃网页系统"},
-c1:"真实玻璃层",
-c2:"空间阴影",
-c3:"Apple UI 节奏"
-},
-en:{
-nav:{home:"Home",about:"About",contact:"Contact"},
-hero:{title:"Ultimate Liquid Glass",sub:"macOS Style Glass Web"},
-c1:"True Glass Layers",
-c2:"Spatial Shadow",
-c3:"Apple Rhythm"
-}
-};
+            ctx.font = '300 40px -apple-system, BlinkMacSystemFont';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.fillText('ENGINE', centerX, centerY + 50);
 
-function setLang(l){
-document.querySelectorAll("[data-i18n]").forEach(e=>{
-const k=e.dataset.i18n.split(".");
-e.innerText=dict[l][k[0]][k[1]]||dict[l][e.dataset.i18n];
-});
-}
-setLang("zh");
-</script>
+            // 扫描线效果
+            const scanY = (time * 100) % textureHeight;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillRect(0, scanY, textureWidth, 20);
+        }
 
+
+        // ==========================================
+        // 2. THREE.JS 3D 场景系统
+        // ==========================================
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+
+        // 相机设置
+        const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 0, 5);
+
+        // 渲染器设置
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setPixelRatio(window.devicePixelRatio); // 高清屏适配
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping; // 电影级色调
+        renderer.toneMappingExposure = 1.0;
+        container.appendChild(renderer.domElement);
+
+        // 环境光照 (HDRI 模拟) - 玻璃质感的灵魂
+        const environment = new RoomEnvironment();
+        const pmremGenerator = new THREE.PMREMGenerator(renderer);
+        scene.environment = pmremGenerator.fromScene(environment).texture;
+
+        // 几何体：高精度的二十面体，用于液态变形
+        const geometry = new THREE.IcosahedronGeometry(1.2, 128);
+
+        // 材质：物理级玻璃 + 自发光 Canvas
+        const material = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            
+            // 玻璃特性
+            transmission: 1.0,    // 全透
+            roughness: 0.15,      // 表面微磨砂
+            metalness: 0.1,
+            ior: 1.5,             // 折射率
+            thickness: 1.5,       // 厚度 (产生凸透镜效果)
+            
+            // 关键：将 Canvas 作为自发光贴图
+            emissive: 0xffffff,
+            emissiveMap: dynamicTexture,
+            emissiveIntensity: 1.2, // 发光强度
+            
+            // 细节
+            clearcoat: 1.0,         // 表面清漆层 (更亮)
+            clearcoatRoughness: 0.05,
+            side: THREE.DoubleSide
+        });
+
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // 交互控制器
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.enablePan = false;
+        controls.enableZoom = false;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 2.0;
+
+        // 噪声生成器 (用于顶点变形)
+        const simplex = new SimplexNoise();
+        const clock = new THREE.Clock();
+
+        // 缓存原始顶点位置
+        const originalPositions = geometry.attributes.position.clone();
+
+        // ==========================================
+        // 3. 动画循环
+        // ==========================================
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const time = clock.getElapsedTime();
+
+            // A. 更新 Canvas 内容
+            drawCanvas(time);
+            dynamicTexture.needsUpdate = true; // 告诉 Three.js 纹理变了
+
+            // B. 计算液态变形 (逐顶点操作)
+            const positionAttribute = geometry.attributes.position;
+            const noiseSpeed = 0.5;
+            const noiseFreq = 0.8;
+            const noiseAmp = 0.15; // 变形幅度
+
+            for (let i = 0; i < positionAttribute.count; i++) {
+                const v = new THREE.Vector3();
+                v.fromBufferAttribute(originalPositions, i);
+
+                // 4D 噪声 (x, y, z, time) 实现平滑流动
+                const noise = simplex.noise4d(
+                    v.x * noiseFreq, 
+                    v.y * noiseFreq, 
+                    v.z * noiseFreq, 
+                    time * noiseSpeed
+                );
+
+                // 将噪声叠加到原始半径上
+                const distortion = 1 + noise * noiseAmp;
+                v.multiplyScalar(distortion);
+
+                positionAttribute.setXYZ(i, v.x, v.y, v.z);
+            }
+
+            // C. 必要的更新
+            geometry.computeVertexNormals(); // 重新计算法线 (反射光才会动)
+            geometry.attributes.position.needsUpdate = true;
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // 窗口自适应
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
 </body>
 </html>
