@@ -14786,7 +14786,7 @@ const glassMat = new THREE.ShaderMaterial({
 });
 
 // 增加几何体的细分级别
-const geo = new THREE.IcosahedronGeometry(2.2, 150); // 提高细分级别
+const geo = new THREE.IcosahedronGeometry(2.2, 500); // 提高细分级别
 const originalPos = geo.attributes.position.clone();
 const sphere = new THREE.Mesh(geo, glassMat);
 mainScene.add(sphere);
