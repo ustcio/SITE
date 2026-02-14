@@ -80,7 +80,6 @@
                     .nav-glass-container,
                     .kit-tool-window,
                     .value-card,
-                    .paper-card,
                     .stat-item,
                     .team-card,
                     .modal,
@@ -150,7 +149,7 @@
                     '.feature-card',
                     '.kit-tool-window',
                     '.value-card',
-                    '.paper-card',
+                    // '.paper-card',   // 移除 - 避免Research页面光晕
                     '.stat-item',
                     '.team-card',
                     '.modal',
@@ -347,7 +346,7 @@
                     '.feature-card',
                     '.kit-tool-window', 
                     '.value-card',
-                    '.paper-card',
+                    // '.paper-card',   // 移除 - 避免Research页面光晕
                     '.stat-item',
                     '.team-card'
                 ];

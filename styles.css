@@ -3611,7 +3611,6 @@
         .chatbot-message.user .chatbot-bubble {
             background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
             border: none;
-            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.35);
         }
 
         .chatbot-bubble p {
