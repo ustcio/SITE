@@ -33,6 +33,9 @@ export default {
       if (path === '/api/chat') {
         return await handleChat(request, env);
       }
+      if (path === '/api/doubao') {
+        return await handleDoubao(request, env);
+      }
       if (path === '/api/signup') {
         return await handleSignup(request, env, ctx);
       }
@@ -190,13 +193,90 @@ async function handleChat(request, env) {
         message: 'Unexpected response from AI'
       });
     }
-
   } catch (error) {
     console.error('Chat error:', error);
     return jsonResponse({
       success: false,
       message: 'Failed to get AI response'
     });
+  }
+}
+
+// ================================================================================
+// 1.1 豆包 ChatBot (火山引擎)
+// ================================================================================
+
+async function handleDoubao(request, env) {
+  if (request.method !== 'POST') {
+    return jsonResponse({ error: 'Method not allowed' }, 405);
+  }
+
+  const { prompt, model } = await request.json();
+  
+  if (!prompt) {
+    return jsonResponse({ error: 'Prompt is required' }, 400);
+  }
+
+  const DOUBAO_API_KEY = env.DOUBAO_API_KEY;
+  
+  if (!DOUBAO_API_KEY) {
+    return jsonResponse({ error: 'Doubao API key not configured' }, 500);
+  }
+
+  // Model mapping - 根据火山引擎实际模型ID调整
+  const modelMap = {
+    'doubao-2.0-pro': 'Doubao-Seed-2.0-pro',
+    'doubao-2.0-code': 'Doubao-Seed-2.0-Code'
+  };
+
+  const endpointId = modelMap[model] || 'Doubao-Seed-2.0-pro';
+
+  try {
+    const response = await fetch('https://ark.cn-beijing.volces.com/api/v3/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${DOUBAO_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: endpointId,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are AGI Era AI Assistant, a helpful, harmless, and honest AI assistant. You can help users with coding, analysis, creative writing, and various other tasks. Please respond in the same language as the user.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 2000
+      })
+    });
+
+    const data = await response.json();
+    
+    if (data.choices && data.choices[0]) {
+      return jsonResponse({
+        answer: data.choices[0].message.content
+      });
+    } else if (data.error) {
+      console.error('Doubao API error:', data.error);
+      return jsonResponse({
+        error: data.error.message || 'AI service error'
+      }, 500);
+    } else {
+      return jsonResponse({
+        error: 'Unexpected response from AI'
+      }, 500);
+    }
+
+  } catch (error) {
+    console.error('Doubao chat error:', error);
+    return jsonResponse({
+      error: 'Failed to get AI response: ' + error.message
+    }, 500);
   }
 }
 
