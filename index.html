@@ -384,18 +384,6 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
         .nav-actions {
             display: flex;
             gap: 1rem;
@@ -7778,31 +7766,10 @@ footer {
     50% { transform: translateY(-5px) scale(1.05); }
 }
 
-/* 22. 导航链接悬停发光 */
+/* 22. 导航链接样式 */
 .nav-links a {
     position: relative;
     transition: all 0.3s ease;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 80%;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent 0%,
-        rgba(41, 151, 255, 0.8) 50%,
-        transparent 100%);
-    border-radius: 2px;
-    transition: transform 0.3s ease;
-}
-
-.nav-links a:hover::after,
-.nav-links a.active::after {
-    transform: translateX(-50%) scaleX(1);
 }
 
 /* 23. 为所有卡片添加倾斜效果准备 */
