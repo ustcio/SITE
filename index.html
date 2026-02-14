@@ -299,6 +299,20 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
+        .nav-glass-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 100%;
+        }
+
         .logo {
             font-size: 1.3rem;
             font-weight: 700;
@@ -431,6 +445,7 @@
             right: 0;
             background: var(--glass-bg);
             backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             min-width: 120px;
@@ -440,7 +455,7 @@
             transform: translateY(-10px);
             transition: all 0.3s var(--transition-smooth);
             overflow: hidden;
-            z-index: 100;
+            z-index: 1001;
         }
 
         .lang-dropdown.active {
@@ -7578,68 +7593,70 @@ button, a, input, select, textarea {
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo">AGI Era</div>
-            
-            <ul class="nav-links">
-                <li><a class="active" data-page="home" onclick="showPage('home')" data-i18n="nav.home">Home</a></li>
-                <li><a data-page="research" onclick="showPage('research')" data-i18n="nav.research">Research</a></li>
-                <li><a data-page="chatbot" onclick="showPage('chatbot')" data-i18n="nav.chatbot">ChatBot</a></li>
-                <li><a data-page="kit" onclick="showPage('kit')" data-i18n="nav.kit">Kit</a></li>
-                <li><a data-page="about" onclick="showPage('about')" data-i18n="nav.about">About</a></li>
-            </ul>
-            
-            <div class="nav-actions">
-                <button class="theme-toggle" onclick="toggleTheme()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
+            <div class="nav-glass-container">
+                <div class="logo">AGI Era</div>
                 
-                <div class="lang-switcher">
-                    <button class="lang-btn" onclick="toggleLangDropdown()">
-                        <span id="current-lang">EN</span>
+                <ul class="nav-links">
+                    <li><a class="active" data-page="home" onclick="showPage('home')" data-i18n="nav.home">Home</a></li>
+                    <li><a data-page="research" onclick="showPage('research')" data-i18n="nav.research">Research</a></li>
+                    <li><a data-page="chatbot" onclick="showPage('chatbot')" data-i18n="nav.chatbot">ChatBot</a></li>
+                    <li><a data-page="kit" onclick="showPage('kit')" data-i18n="nav.kit">Kit</a></li>
+                    <li><a data-page="about" onclick="showPage('about')" data-i18n="nav.about">About</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
                     </button>
-                    <div class="lang-dropdown" id="lang-dropdown">
-                        <div class="lang-option active" onclick="switchLang('en')">English</div>
-                        <div class="lang-option" onclick="switchLang('zh')">中文</div>
-                    </div>
-                </div>
-                
-                <div id="auth-buttons" style="display: flex; gap: 1rem;">
-                    <button class="nav-login" onclick="openModal('login')" data-i18n="nav.login">Log In</button>
-                    <button class="nav-cta" onclick="openModal('signup')" data-i18n="nav.getStarted">Get Started</button>
-                </div>
-                
-                <div class="user-menu" id="user-menu" style="display: none;">
-                    <div class="user-avatar" onclick="toggleUserDropdown()">
-                        <span id="user-initial">U</span>
-                    </div>
-                    <div class="user-dropdown" id="user-dropdown">
-                        <div class="user-info">
-                            <div id="user-name-display">User</div>
-                            <div class="user-email" id="user-email-display">user@example.com</div>
+                    
+                    <div class="lang-switcher">
+                        <button class="lang-btn" onclick="toggleLangDropdown()">
+                            <span id="current-lang">EN</span>
+                        </button>
+                        <div class="lang-dropdown" id="lang-dropdown">
+                            <div class="lang-option active" onclick="switchLang('en')">English</div>
+                            <div class="lang-option" onclick="switchLang('zh')">中文</div>
                         </div>
-                        <a class="user-dropdown-item" onclick="showPage('profile')">Profile</a>
-                        <a class="user-dropdown-item" onclick="showPage('settings')">Settings</a>
-                        <a class="user-dropdown-item" onclick="logout()">Logout</a>
                     </div>
+                    
+                    <div id="auth-buttons" style="display: flex; gap: 1rem;">
+                        <button class="nav-login" onclick="openModal('login')" data-i18n="nav.login">Log In</button>
+                        <button class="nav-cta" onclick="openModal('signup')" data-i18n="nav.getStarted">Get Started</button>
+                    </div>
+                    
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <div class="user-avatar" onclick="toggleUserDropdown()">
+                            <span id="user-initial">U</span>
+                        </div>
+                        <div class="user-dropdown" id="user-dropdown">
+                            <div class="user-info">
+                                <div id="user-name-display">User</div>
+                                <div class="user-email" id="user-email-display">user@example.com</div>
+                            </div>
+                            <a class="user-dropdown-item" onclick="showPage('profile')">Profile</a>
+                            <a class="user-dropdown-item" onclick="showPage('settings')">Settings</a>
+                            <a class="user-dropdown-item" onclick="logout()">Logout</a>
+                        </div>
+                    </div>
+                    
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
                 </div>
-                
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
             </div>
         </div>
         
@@ -10205,6 +10222,14 @@ console.log(response.text);</code>
         // 初始化
         function initThemeLang() {
             document.getElementById('current-lang').textContent = currentLang.toUpperCase();
+            updatePageContent();
+            
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.textContent.includes(currentLang === 'en' ? 'English' : '中文')) {
+                    opt.classList.add('active');
+                }
+            });
         }
 
         // ==================== API 配置 ====================
