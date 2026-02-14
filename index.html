@@ -1949,28 +1949,128 @@
             gap: 1.5rem;
         }
 
-        .visitor-brand {
+        /* Visitor Activity Graph - GitHub Style */
+        .visitor-activity {
+            padding: 3rem 4rem;
+            background: var(--bg-secondary);
+        }
+
+        .visitor-activity-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .visitor-activity-header {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.25rem;
-            background: linear-gradient(135deg, rgba(41, 151, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            justify-content: space-between;
+            margin-bottom: 1rem;
         }
 
-        .visitor-brand-icon {
-            font-size: 1.75rem;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-        }
-
-        .visitor-brand-name {
-            font-size: 1.125rem;
+        .visitor-activity-title {
+            font-size: 1rem;
             font-weight: 600;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .visitor-activity-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .visitor-activity-graph {
+            display: flex;
+            gap: 3px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            overflow-x: auto;
+        }
+
+        .visitor-activity-week {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .visitor-activity-day {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .visitor-activity-day:hover {
+            transform: scale(1.3);
+            outline: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .visitor-activity-day[data-level="0"] { background: rgba(255, 255, 255, 0.03); }
+        .visitor-activity-day[data-level="1"] { background: rgba(41, 151, 255, 0.2); }
+        .visitor-activity-day[data-level="2"] { background: rgba(41, 151, 255, 0.4); }
+        .visitor-activity-day[data-level="3"] { background: rgba(41, 151, 255, 0.6); }
+        .visitor-activity-day[data-level="4"] { background: rgba(41, 151, 255, 0.85); }
+
+        .visitor-activity-legend {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-cells {
+            display: flex;
+            gap: 3px;
+        }
+
+        .legend-cell {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .legend-cell[data-level="0"] { background: rgba(255, 255, 255, 0.03); }
+        .legend-cell[data-level="1"] { background: rgba(41, 151, 255, 0.2); }
+        .legend-cell[data-level="2"] { background: rgba(41, 151, 255, 0.4); }
+        .legend-cell[data-level="3"] { background: rgba(41, 151, 255, 0.6); }
+        .legend-cell[data-level="4"] { background: rgba(41, 151, 255, 0.85); }
+
+        .visitor-activity-months {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem 0;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .visitor-activity {
+                padding: 2rem 1.5rem;
+            }
+
+            .visitor-activity-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .visitor-activity-day {
+                width: 10px;
+                height: 10px;
+            }
+
+            .visitor-activity-graph {
+                padding: 0.75rem;
+            }
         }
 
         .visitor-info {
@@ -2130,18 +2230,6 @@
 
             .visitor-counter-inner {
                 gap: 1rem;
-            }
-
-            .visitor-brand {
-                padding: 0.5rem 1rem;
-            }
-
-            .visitor-brand-icon {
-                font-size: 1.5rem;
-            }
-
-            .visitor-brand-name {
-                font-size: 1rem;
             }
 
             .visitor-count {
@@ -8034,6 +8122,29 @@ button, a, input, select, textarea {
                 </div>
             </div>
         </section>
+
+        <!-- Visitor Activity Graph -->
+        <section class="visitor-activity">
+            <div class="visitor-activity-container">
+                <div class="visitor-activity-header">
+                    <span class="visitor-activity-title">🐱 Meow Note</span>
+                    <span class="visitor-activity-subtitle">Visitor activity in the last year</span>
+                </div>
+                <div class="visitor-activity-graph" id="visitor-graph">
+                </div>
+                <div class="visitor-activity-legend">
+                    <span>Less</span>
+                    <div class="legend-cells">
+                        <span class="legend-cell" data-level="0"></span>
+                        <span class="legend-cell" data-level="1"></span>
+                        <span class="legend-cell" data-level="2"></span>
+                        <span class="legend-cell" data-level="3"></span>
+                        <span class="legend-cell" data-level="4"></span>
+                    </div>
+                    <span>More</span>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- About Page -->
@@ -10095,11 +10206,6 @@ console.log(response.text);</code>
     <!-- Visitor Counter Section -->
     <div class="visitor-counter">
         <div class="visitor-counter-inner">
-            <div class="visitor-brand">
-                <span class="visitor-brand-icon">🐱</span>
-                <span class="visitor-brand-name">Meow Note</span>
-            </div>
-            <div class="visitor-divider"></div>
             <div class="visitor-info">
                 <span class="visitor-label">Total Visitors</span>
                 <div class="visitor-count-wrapper">
@@ -10791,6 +10897,55 @@ console.log(response.text);</code>
             requestAnimationFrame(update);
         }
 
+        // ==================== 访客活动图生成 ====================
+        function generateVisitorActivityGraph() {
+            const graphContainer = document.getElementById('visitor-graph');
+            if (!graphContainer) return;
+
+            graphContainer.innerHTML = '';
+
+            const today = new Date();
+            const weeks = 52;
+            const daysPerWeek = 7;
+
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            
+            for (let week = 0; week < weeks; week++) {
+                const weekDiv = document.createElement('div');
+                weekDiv.className = 'visitor-activity-week';
+                
+                for (let day = 0; day < daysPerWeek; day++) {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.className = 'visitor-activity-day';
+                    
+                    const date = new Date(today);
+                    date.setDate(date.getDate() - ((weeks - 1 - week) * 7 + (daysPerWeek - 1 - day)));
+                    
+                    const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+                    const seed = date.getFullYear() * 1000 + dayOfYear;
+                    const pseudoRandom = (Math.sin(seed) * 10000) % 1;
+                    
+                    const level = Math.floor(Math.abs(pseudoRandom) * 5);
+                    dayDiv.setAttribute('data-level', level);
+                    
+                    const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    dayDiv.setAttribute('title', dateStr);
+                    
+                    weekDiv.appendChild(dayDiv);
+                }
+                
+                graphContainer.appendChild(weekDiv);
+            }
+
+            const monthsContainer = document.createElement('div');
+            monthsContainer.className = 'visitor-activity-months';
+            months.forEach(month => {
+                const span = document.createElement('span');
+                span.textContent = month;
+                monthsContainer.appendChild(span);
+            });
+            graphContainer.parentElement.appendChild(monthsContainer);
+        }
 
 
         // ==================== IP检测功能 ====================
@@ -11061,6 +11216,9 @@ console.log(response.text);</code>
             
             // 初始化访客统计
             initVisitorCounter();
+            
+            // 生成访客活动图
+            generateVisitorActivityGraph();
             
             // 初始化动画
             initAnimations();
