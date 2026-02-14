@@ -4698,6 +4698,290 @@
             line-height: 1.5;
         }
 
+        /* Gold Price Styles */
+        .kit-gold-display {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+        }
+
+        .kit-gold-price-main {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .kit-gold-price-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .kit-gold-price-unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .kit-gold-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .kit-gold-change-value {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .kit-gold-change-value.up {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .kit-gold-change-value.down {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .kit-gold-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .kit-gold-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .kit-gold-tab {
+            flex: 1;
+            min-width: 60px;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .kit-gold-tab:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .kit-gold-tab.active {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #FFD700;
+            color: #FFD700;
+        }
+
+        .kit-gold-chart-container {
+            position: relative;
+            height: 180px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .kit-gold-chart-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .kit-gold-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .kit-gold-stat-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .kit-gold-stat-label {
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .kit-gold-stat-value {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .kit-gold-stat-value.high {
+            color: var(--accent-green);
+        }
+
+        .kit-gold-stat-value.low {
+            color: #ef4444;
+        }
+
+        .kit-gold-refresh-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+        }
+
+        .kit-gold-refresh-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: goldPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes goldPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .kit-gold-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .kit-gold-modal-overlay.active {
+            display: flex;
+        }
+
+        .kit-gold-modal {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .kit-gold-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .kit-gold-modal-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .kit-gold-modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .kit-gold-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .kit-gold-modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: calc(80vh - 80px);
+        }
+
+        .kit-gold-chart-large {
+            height: 300px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .kit-gold-period-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .kit-gold-period-stat {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .kit-gold-period-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .kit-gold-period-stat-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
         @media (max-width: 768px) {
             .kit-password-tips {
                 grid-template-columns: 1fr;
@@ -7697,7 +7981,7 @@ button, a, input, select, textarea {
             <div class="kit-page-header">
                 <div class="page-badge" data-i18n="kit.badge">Utility Toolkit</div>
                 <h1><span data-i18n="kit.title">Super</span> <span class="gradient">Kit</span></h1>
-                <p data-i18n="kit.subtitle">专业工具集 · 26款实用工具助力您的日常工作</p>
+                <p data-i18n="kit.subtitle">专业工具集 · 27款实用工具助力您的日常工作</p>
             </div>
 
             <div class="kit-tools-grid">
@@ -8924,6 +9208,76 @@ button, a, input, select, textarea {
                         </button>
                     </div>
                 </div>
+
+                <!-- 27. Real-time Gold Price (实时黄金价格) -->
+                <div class="kit-tool-window">
+                    <div class="kit-tool-header">
+                        <div class="kit-tool-header-left">
+                            <div class="kit-tool-dots">
+                                <div class="kit-tool-dot red"></div>
+                                <div class="kit-tool-dot yellow"></div>
+                                <div class="kit-tool-dot green"></div>
+                            </div>
+                            <div class="kit-tool-title">
+                                <div class="kit-tool-icon" style="background: rgba(255, 215, 0, 0.15); color: #FFD700;">🥇</div>
+                                实时黄金价格
+                            </div>
+                        </div>
+                        <span class="kit-live-indicator">● LIVE</span>
+                    </div>
+                    <div class="kit-tool-body">
+                        <div class="kit-gold-display">
+                            <div class="kit-gold-price-main">
+                                <span class="kit-gold-price-value" id="gold-price-current">--</span>
+                                <span class="kit-gold-price-unit">USD/oz</span>
+                            </div>
+                            <div class="kit-gold-change">
+                                <div class="kit-gold-change-value" id="gold-change-usd">
+                                    <span id="gold-change-arrow">--</span>
+                                    <span id="gold-change-value">--</span>
+                                </div>
+                                <div class="kit-gold-change-value" id="gold-change-percent">
+                                    <span id="gold-percent-value">--</span>
+                                </div>
+                            </div>
+                            <div class="kit-gold-time" id="gold-update-time">更新中...</div>
+                        </div>
+                        <div class="kit-gold-tabs">
+                            <button class="kit-gold-tab active" onclick="switchGoldPeriod('1M')">1月</button>
+                            <button class="kit-gold-tab" onclick="switchGoldPeriod('3M')">3月</button>
+                            <button class="kit-gold-tab" onclick="switchGoldPeriod('6M')">6月</button>
+                            <button class="kit-gold-tab" onclick="switchGoldPeriod('1Y')">1年</button>
+                        </div>
+                        <div class="kit-gold-chart-container">
+                            <canvas id="gold-chart-canvas" class="kit-gold-chart-canvas"></canvas>
+                        </div>
+                        <div class="kit-gold-stats">
+                            <div class="kit-gold-stat-item">
+                                <div class="kit-gold-stat-label">最高价</div>
+                                <div class="kit-gold-stat-value high" id="gold-high">--</div>
+                            </div>
+                            <div class="kit-gold-stat-item">
+                                <div class="kit-gold-stat-label">最低价</div>
+                                <div class="kit-gold-stat-value low" id="gold-low">--</div>
+                            </div>
+                            <div class="kit-gold-stat-item">
+                                <div class="kit-gold-stat-label">开盘价</div>
+                                <div class="kit-gold-stat-value" id="gold-open">--</div>
+                            </div>
+                            <div class="kit-gold-stat-item">
+                                <div class="kit-gold-stat-label">涨幅</div>
+                                <div class="kit-gold-stat-value" id="gold-change-total">--</div>
+                            </div>
+                        </div>
+                        <div class="kit-gold-refresh-indicator">
+                            <div class="kit-gold-refresh-dot"></div>
+                            <span>每2秒自动刷新</span>
+                        </div>
+                        <button class="kit-btn kit-btn-primary" onclick="openGoldChartModal()" style="width: 100%; margin-top: 1rem; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border: none; color: #000;">
+                            📊 查看详细曲线
+                        </button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -9502,7 +9856,7 @@ console.log(response.text);</code>
                 'demo.send': '发送',
                 'kit.badge': '实用工具包',
                 'kit.title': '超级',
-                'kit.subtitle': '专业工具集 · 26款实用工具助力您的日常工作',
+                'kit.subtitle': '专业工具集 · 27款实用工具助力您的日常工作',
                 'kit.speedTest': '网速测试',
                 'kit.pingTest': 'Ping 测试',
                 'kit.ipDetection': 'IP 检测',
@@ -12676,8 +13030,344 @@ console.log(response.text);</code>
             tarotFlipped = false;
         }
 
+        // ==================== 27. 实时黄金价格 ====================
+        let goldPriceInterval = null;
+        let currentGoldPeriod = '1M';
+        let goldPriceHistory = [];
+        let goldChartData = {
+            '1M': [],
+            '3M': [],
+            '6M': [],
+            '1Y': []
+        };
+
+        const goldBasePrice = 2650;
+
+        function generateGoldPrice() {
+            const now = Date.now();
+            const hour = new Date().getHours();
+            const volatility = (Math.sin(now / 10000) * 20) + (Math.random() - 0.5) * 15;
+            const trend = Math.sin(now / 100000) * 30;
+            const sessionBonus = (hour >= 9 && hour <= 16) ? Math.random() * 10 : 0;
+            return goldBasePrice + volatility + trend + sessionBonus;
+        }
+
+        function generateHistoricalData(days) {
+            const data = [];
+            const now = Date.now();
+            const basePrice = goldBasePrice - 50 + Math.random() * 100;
+            
+            for (let i = days; i >= 0; i--) {
+                const timestamp = now - i * 24 * 60 * 60 * 1000;
+                const trend = (days - i) / days * 30;
+                const volatility = Math.sin(i * 0.5) * 25 + Math.random() * 20;
+                const price = basePrice + trend + volatility;
+                data.push({
+                    timestamp: timestamp,
+                    price: price,
+                    date: new Date(timestamp).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })
+                });
+            }
+            return data;
+        }
+
+        function initGoldData() {
+            goldChartData['1M'] = generateHistoricalData(30);
+            goldChartData['3M'] = generateHistoricalData(90);
+            goldChartData['6M'] = generateHistoricalData(180);
+            goldChartData['1Y'] = generateHistoricalData(365);
+        }
+
+        function updateGoldPrice() {
+            const currentPrice = generateGoldPrice();
+            const priceEl = document.getElementById('gold-price-current');
+            const changeUsdEl = document.getElementById('gold-change-usd');
+            const changePercentEl = document.getElementById('gold-change-percent');
+            const timeEl = document.getElementById('gold-update-time');
+            
+            if (priceEl) {
+                priceEl.textContent = currentPrice.toFixed(2);
+            }
+            
+            const data = goldChartData[currentGoldPeriod];
+            if (data && data.length > 0) {
+                const openPrice = data[0].price;
+                const change = currentPrice - openPrice;
+                const changePercent = (change / openPrice) * 100;
+                
+                if (changeUsdEl) {
+                    const arrow = document.getElementById('gold-change-arrow');
+                    const value = document.getElementById('gold-change-value');
+                    if (change >= 0) {
+                        changeUsdEl.className = 'kit-gold-change-value up';
+                        if (arrow) arrow.textContent = '↑';
+                        if (value) value.textContent = `+$${change.toFixed(2)}`;
+                    } else {
+                        changeUsdEl.className = 'kit-gold-change-value down';
+                        if (arrow) arrow.textContent = '↓';
+                        if (value) value.textContent = `-$${Math.abs(change).toFixed(2)}`;
+                    }
+                }
+                
+                if (changePercentEl) {
+                    const percentValue = document.getElementById('gold-percent-value');
+                    if (change >= 0) {
+                        changePercentEl.className = 'kit-gold-change-value up';
+                        if (percentValue) percentValue.textContent = `+${changePercent.toFixed(2)}%`;
+                    } else {
+                        changePercentEl.className = 'kit-gold-change-value down';
+                        if (percentValue) percentValue.textContent = `${changePercent.toFixed(2)}%`;
+                    }
+                }
+                
+                const highEl = document.getElementById('gold-high');
+                const lowEl = document.getElementById('gold-low');
+                const openEl = document.getElementById('gold-open');
+                const changeTotalEl = document.getElementById('gold-change-total');
+                
+                const prices = data.map(d => d.price);
+                const high = Math.max(...prices, currentPrice);
+                const low = Math.min(...prices, currentPrice);
+                
+                if (highEl) highEl.textContent = `$${high.toFixed(2)}`;
+                if (lowEl) lowEl.textContent = `$${low.toFixed(2)}`;
+                if (openEl) openEl.textContent = `$${openPrice.toFixed(2)}`;
+                
+                if (changeTotalEl) {
+                    const totalChange = ((currentPrice - openPrice) / openPrice) * 100;
+                    changeTotalEl.textContent = `${totalChange >= 0 ? '+' : ''}${totalChange.toFixed(2)}%`;
+                    changeTotalEl.className = `kit-gold-stat-value ${totalChange >= 0 ? 'high' : 'low'}`;
+                }
+            }
+            
+            if (timeEl) {
+                const now = new Date();
+                timeEl.textContent = `更新时间: ${now.toLocaleTimeString('zh-CN')} (模拟数据)`;
+            }
+            
+            drawGoldChart();
+        }
+
+        function drawGoldChart(canvasId = 'gold-chart-canvas', height = 180) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.parentElement.getBoundingClientRect();
+            
+            canvas.width = rect.width * 2;
+            canvas.height = height * 2;
+            ctx.scale(2, 2);
+            
+            const width = rect.width;
+            const data = goldChartData[currentGoldPeriod];
+            
+            if (!data || data.length === 0) return;
+            
+            const currentPrice = parseFloat(document.getElementById('gold-price-current')?.textContent) || generateGoldPrice();
+            const allPrices = [...data.map(d => d.price), currentPrice];
+            const minPrice = Math.min(...allPrices) - 10;
+            const maxPrice = Math.max(...allPrices) + 10;
+            const priceRange = maxPrice - minPrice;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            const gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, 'rgba(255, 215, 0, 0.3)');
+            gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+            
+            ctx.beginPath();
+            ctx.moveTo(0, height);
+            
+            const stepX = width / (data.length);
+            
+            data.forEach((point, i) => {
+                const x = i * stepX;
+                const y = height - ((point.price - minPrice) / priceRange) * (height - 20) - 10;
+                if (i === 0) {
+                    ctx.lineTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            
+            const lastX = (data.length - 1) * stepX;
+            const lastY = height - ((currentPrice - minPrice) / priceRange) * (height - 20) - 10;
+            ctx.lineTo(lastX, lastY);
+            ctx.lineTo(lastX, height);
+            ctx.closePath();
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            ctx.beginPath();
+            data.forEach((point, i) => {
+                const x = i * stepX;
+                const y = height - ((point.price - minPrice) / priceRange) * (height - 20) - 10;
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.lineTo(lastX, lastY);
+            ctx.strokeStyle = '#FFD700';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.arc(lastX, lastY, 5, 0, Math.PI * 2);
+            ctx.fillStyle = '#FFD700';
+            ctx.fill();
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.font = '10px Outfit';
+            ctx.fillText(`$${maxPrice.toFixed(0)}`, 5, 15);
+            ctx.fillText(`$${minPrice.toFixed(0)}`, 5, height - 5);
+        }
+
+        function switchGoldPeriod(period) {
+            currentGoldPeriod = period;
+            document.querySelectorAll('.kit-gold-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent.includes(period === '1M' ? '1月' : period === '3M' ? '3月' : period === '6M' ? '6月' : '1年')) {
+                    tab.classList.add('active');
+                }
+            });
+            updateGoldPrice();
+        }
+
+        function openGoldChartModal() {
+            let modal = document.getElementById('gold-chart-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'gold-chart-modal';
+                modal.className = 'kit-gold-modal-overlay';
+                modal.innerHTML = `
+                    <div class="kit-gold-modal">
+                        <div class="kit-gold-modal-header">
+                            <div class="kit-gold-modal-title">
+                                <span style="font-size: 1.5rem;">🥇</span>
+                                <span>黄金价格走势图</span>
+                            </div>
+                            <button class="kit-gold-modal-close" onclick="closeGoldChartModal()">✕</button>
+                        </div>
+                        <div class="kit-gold-modal-body">
+                            <div class="kit-gold-tabs" id="modal-gold-tabs">
+                                <button class="kit-gold-tab active" onclick="switchModalGoldPeriod('1M')">1月</button>
+                                <button class="kit-gold-tab" onclick="switchModalGoldPeriod('3M')">3月</button>
+                                <button class="kit-gold-tab" onclick="switchModalGoldPeriod('6M')">6月</button>
+                                <button class="kit-gold-tab" onclick="switchModalGoldPeriod('1Y')">1年</button>
+                            </div>
+                            <div class="kit-gold-chart-large">
+                                <canvas id="gold-chart-canvas-modal" class="kit-gold-chart-canvas"></canvas>
+                            </div>
+                            <div class="kit-gold-period-stats">
+                                <div class="kit-gold-period-stat">
+                                    <div class="kit-gold-period-stat-label">起始价格</div>
+                                    <div class="kit-gold-period-stat-value" id="modal-gold-start">--</div>
+                                </div>
+                                <div class="kit-gold-period-stat">
+                                    <div class="kit-gold-period-stat-label">最新价格</div>
+                                    <div class="kit-gold-period-stat-value" id="modal-gold-current" style="color: #FFD700;">--</div>
+                                </div>
+                                <div class="kit-gold-period-stat">
+                                    <div class="kit-gold-period-stat-label">最高价格</div>
+                                    <div class="kit-gold-period-stat-value" style="color: var(--accent-green);" id="modal-gold-high">--</div>
+                                </div>
+                                <div class="kit-gold-period-stat">
+                                    <div class="kit-gold-period-stat-label">最低价格</div>
+                                    <div class="kit-gold-period-stat-value" style="color: #ef4444;" id="modal-gold-low">--</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 1rem; text-align: center;">
+                                <div class="kit-gold-period-stat" style="padding: 1rem;">
+                                    <div class="kit-gold-period-stat-label">期间涨幅</div>
+                                    <div class="kit-gold-period-stat-value" id="modal-gold-change" style="font-size: 1.5rem;">--</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeGoldChartModal();
+                });
+            }
+            
+            modal.classList.add('active');
+            updateModalGoldChart();
+        }
+
+        function updateModalGoldChart() {
+            const data = goldChartData[currentGoldPeriod];
+            if (!data || data.length === 0) return;
+            
+            const currentPrice = parseFloat(document.getElementById('gold-price-current')?.textContent) || generateGoldPrice();
+            const startPrice = data[0].price;
+            const prices = data.map(d => d.price);
+            const high = Math.max(...prices, currentPrice);
+            const low = Math.min(...prices, currentPrice);
+            const change = ((currentPrice - startPrice) / startPrice) * 100;
+            
+            document.getElementById('modal-gold-start').textContent = `$${startPrice.toFixed(2)}`;
+            document.getElementById('modal-gold-current').textContent = `$${currentPrice.toFixed(2)}`;
+            document.getElementById('modal-gold-high').textContent = `$${high.toFixed(2)}`;
+            document.getElementById('modal-gold-low').textContent = `$${low.toFixed(2)}`;
+            
+            const changeEl = document.getElementById('modal-gold-change');
+            changeEl.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+            changeEl.style.color = change >= 0 ? 'var(--accent-green)' : '#ef4444';
+            
+            document.querySelectorAll('#modal-gold-tabs .kit-gold-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent.includes(currentGoldPeriod === '1M' ? '1月' : currentGoldPeriod === '3M' ? '3月' : currentGoldPeriod === '6M' ? '6月' : '1年')) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            setTimeout(() => drawGoldChart('gold-chart-canvas-modal', 300), 50);
+        }
+
+        function switchModalGoldPeriod(period) {
+            currentGoldPeriod = period;
+            document.querySelectorAll('.kit-gold-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll(`#modal-gold-tabs .kit-gold-tab, .kit-tool-body .kit-gold-tab`).forEach(tab => {
+                if (tab.textContent.includes(period === '1M' ? '1月' : period === '3M' ? '3月' : period === '6M' ? '6月' : '1年')) {
+                    tab.classList.add('active');
+                }
+            });
+            updateGoldPrice();
+            updateModalGoldChart();
+        }
+
+        function closeGoldChartModal() {
+            const modal = document.getElementById('gold-chart-modal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        function startGoldPriceUpdates() {
+            initGoldData();
+            updateGoldPrice();
+            
+            if (goldPriceInterval) {
+                clearInterval(goldPriceInterval);
+            }
+            
+            goldPriceInterval = setInterval(() => {
+                updateGoldPrice();
+            }, 2000);
+        }
+
         // 初始化
         initAnimations();
+        startGoldPriceUpdates();
 
         // ==================== 移动端导航菜单 ====================
         function toggleMobileMenu() {
