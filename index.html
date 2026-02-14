@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- QR Code Library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
@@ -27,6 +27,13 @@
     --accent-green: #10b981;
     --accent-orange: #f59e0b;
     --accent-pink: #ec4899;
+    
+    /* Typography */
+    --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: 'Space Grotesk', 'Outfit', sans-serif;
+    --font-serif: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Space Mono', 'Fira Code', monospace;
+    --font-serif-cn: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
     
     /* Glass Properties */
     --glass-bg: rgba(20, 20, 20, 0.35);
@@ -121,11 +128,49 @@
         }
 
         body {
-            font-family: 'Outfit', -apple-system, sans-serif;
+            font-family: var(--font-sans);
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            line-height: 1.3;
+        }
+
+        .font-serif {
+            font-family: var(--font-serif);
+        }
+
+        .font-display {
+            font-family: var(--font-display);
+        }
+
+        .font-mono {
+            font-family: var(--font-mono);
+        }
+
+        .font-serif-cn {
+            font-family: var(--font-serif-cn);
         }
 
         /* ==========================================
@@ -3681,12 +3726,150 @@
         .kit-page-header p {
             color: var(--text-secondary);
             font-size: 1.125rem;
+            font-family: var(--font-serif-cn);
+        }
+
+        .kit-layout {
+            display: flex;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .kit-sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .kit-sidebar-title {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-left: 0.75rem;
+        }
+
+        .kit-category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .kit-category-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .kit-category-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            text-align: left;
+        }
+
+        .kit-category-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .kit-category-btn.active {
+            background: var(--glass-bg);
+            color: var(--accent);
+            border: 1px solid var(--glass-border);
+        }
+
+        .kit-category-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .kit-category-btn.active .kit-category-icon {
+            background: rgba(41, 151, 255, 0.15);
+        }
+
+        .kit-category-count {
+            margin-left: auto;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.125rem 0.5rem;
+            border-radius: 20px;
+        }
+
+        .kit-category-btn.active .kit-category-count {
+            background: rgba(41, 151, 255, 0.2);
+            color: var(--accent);
+        }
+
+        .kit-main {
+            flex: 1;
+            min-width: 0;
         }
 
         .kit-tools-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2.5rem;
+        }
+
+        .kit-tools-grid[data-category="all"] .kit-tool-window {
+            display: block;
+        }
+
+        .kit-tool-window[data-category] {
+            display: none;
+        }
+
+        .kit-tool-window.visible {
+            display: block;
+        }
+
+        .kit-section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .kit-section-icon {
+            font-size: 1.5rem;
+        }
+
+        .kit-section-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .kit-section-desc {
+            font-family: var(--font-serif-cn);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
         }
 
         .kit-tool-window {
@@ -5165,6 +5348,39 @@
         @media (max-width: 1200px) {
             .kit-tools-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .kit-layout {
+                flex-direction: column;
+            }
+            
+            .kit-sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .kit-category-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .kit-category-item {
+                margin-bottom: 0;
+            }
+            
+            .kit-category-btn {
+                padding: 0.5rem 1rem;
+            }
+            
+            .kit-category-btn span:not(.kit-category-icon) {
+                display: none;
+            }
+            
+            .kit-category-count {
+                display: none;
             }
         }
 
@@ -8157,12 +8373,78 @@ button, a, input, select, textarea {
             <div class="kit-page-header">
                 <div class="page-badge" data-i18n="kit.badge">Utility Toolkit</div>
                 <h1><span data-i18n="kit.title">Super</span> <span class="gradient">Kit</span></h1>
-                <p data-i18n="kit.subtitle">专业工具集 · 27款实用工具助力您的日常工作</p>
+                <p data-i18n="kit.subtitle">专业工具集 · 28款实用工具助力您的日常工作</p>
             </div>
 
-            <div class="kit-tools-grid">
+            <div class="kit-layout">
+                <!-- 左侧分类导航 -->
+                <aside class="kit-sidebar">
+                    <div class="kit-sidebar-title">工具分类</div>
+                    <ul class="kit-category-list">
+                        <li class="kit-category-item">
+                            <button class="kit-category-btn active" data-category="all" onclick="filterKitCategory('all')">
+                                <span class="kit-category-icon">📦</span>
+                                <span>全部工具</span>
+                                <span class="kit-category-count">28</span>
+                            </button>
+                        </li>
+                        <li class="kit-category-item">
+                            <button class="kit-category-btn" data-category="network" onclick="filterKitCategory('network')">
+                                <span class="kit-category-icon">🌐</span>
+                                <span>网络工具</span>
+                                <span class="kit-category-count">7</span>
+                            </button>
+                        </li>
+                        <li class="kit-category-item">
+                            <button class="kit-category-btn" data-category="security" onclick="filterKitCategory('security')">
+                                <span class="kit-category-icon">🔒</span>
+                                <span>安全工具</span>
+                                <span class="kit-category-count">3</span>
+                            </button>
+                        </li>
+                        <li class="kit-category-item">
+                            <button class="kit-category-btn" data-category="finance" onclick="filterKitCategory('finance')">
+                                <span class="kit-category-icon">💰</span>
+                                <span>金融理财</span>
+                                <span class="kit-category-count">3</span>
+                            </button>
+                        </li>
+                        <li class="kit-category-item">
+                            <button class="kit-category-btn" data-category="converter" onclick="filterKitCategory('converter')">
+                                <span class="kit-category-icon">🔄</span>
+                                <span>转换工具</span>
+                                <span class="kit-category-count">5</span>
+                            </button>
+                        </li>
+                        <li class="kit-category-item">
+                            <button class="kit-category-btn" data-category="generator" onclick="filterKitCategory('generator')">
+                                <span class="kit-category-icon">⚡</span>
+                                <span>生成工具</span>
+                                <span class="kit-category-count">4</span>
+                            </button>
+                        </li>
+                        <li class="kit-category-item">
+                            <button class="kit-category-btn" data-category="calculator" onclick="filterKitCategory('calculator')">
+                                <span class="kit-category-icon">🔢</span>
+                                <span>计算工具</span>
+                                <span class="kit-category-count">4</span>
+                            </button>
+                        </li>
+                        <li class="kit-category-item">
+                            <button class="kit-category-btn" data-category="fun" onclick="filterKitCategory('fun')">
+                                <span class="kit-category-icon">🎮</span>
+                                <span>趣味工具</span>
+                                <span class="kit-category-count">2</span>
+                            </button>
+                        </li>
+                    </ul>
+                </aside>
+
+                <!-- 右侧工具区域 -->
+                <div class="kit-main">
+                    <div class="kit-tools-grid" id="kit-tools-grid">
                 <!-- 1. Speed Test -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="network">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8212,7 +8494,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 2. Ping Test -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="network">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8243,7 +8525,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 3. IPv4/IPv6 Detection -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="network">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8285,7 +8567,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 4. VPN/Proxy Detection -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="network">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8327,7 +8609,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 5. SSL Certificate Check -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="security">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8358,7 +8640,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 6. HTTP Headers -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="network">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8389,7 +8671,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 7. Security Scan -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="security">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8442,7 +8724,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 8. Currency Exchange -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="finance">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8498,7 +8780,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 9. QR Code Generator -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="generator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8535,7 +8817,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 10. Short URL Generator -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="generator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8564,7 +8846,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 11. Unit Converter -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="converter">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8608,7 +8890,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 12. Password Strength Checker -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="security">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8658,7 +8940,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 13. Translator -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="converter">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8712,7 +8994,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 14. Base Converter (进制转换器) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="converter">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8762,7 +9044,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 15. Random Number Generator (随机数生成器) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="generator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8805,7 +9087,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 16. MD5/SHA Hash Generator (哈希生成器) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="generator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8847,7 +9129,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 17. Age Calculator (年龄计算器) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="calculator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8899,7 +9181,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 18. Date Calculator (日期计算器) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="calculator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -8952,7 +9234,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 19. World Clock (世界时钟) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="converter">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9004,7 +9286,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 20. BMI Calculator (BMI计算器) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="calculator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9056,7 +9338,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 21. Scientific Calculator (科学计算器) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="calculator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9113,7 +9395,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 22. Function Graph Plotter (函数图像绘制) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="calculator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9157,7 +9439,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 23. Reference Citation Generator (参考文献格式化) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="generator">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9230,7 +9512,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 24. Wavelength Frequency Converter (波长频率转换) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="converter">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9287,7 +9569,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 25. Lucky Color Generator (幸运颜色生成) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="fun">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9333,7 +9615,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 26. Tarot Card Reader (塔罗牌抽取) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="fun">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9386,7 +9668,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 27. Real-time Gold Price (实时黄金价格) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="finance">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9457,7 +9739,7 @@ button, a, input, select, textarea {
                 </div>
 
                 <!-- 28. 国内金价 (Domestic Gold Price) -->
-                <div class="kit-tool-window">
+                <div class="kit-tool-window" data-category="finance">
                     <div class="kit-tool-header">
                         <div class="kit-tool-header-left">
                             <div class="kit-tool-dots">
@@ -9526,9 +9808,10 @@ button, a, input, select, textarea {
                         </button>
                     </div>
                 </div>
-            </div>
-        </main>
-    </div>
+                    </div>
+                </div>
+            </main>
+        </div>
 
     <!-- Documentation Page -->
     <div class="page" id="page-docs">
@@ -10839,6 +11122,29 @@ console.log(response.text);</code>
             }, 100);
         }
 
+        // Kit Category Filter
+        function filterKitCategory(category) {
+            const buttons = document.querySelectorAll('.kit-category-btn');
+            const tools = document.querySelectorAll('.kit-tool-window');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            tools.forEach(tool => {
+                if (category === 'all' || tool.dataset.category === category) {
+                    tool.classList.add('visible');
+                    tool.style.display = 'block';
+                } else {
+                    tool.classList.remove('visible');
+                    tool.style.display = 'none';
+                }
+            });
+        }
+
         // Page Navigation
         function showPage(pageId) {
             // Hide all pages
@@ -10886,6 +11192,7 @@ console.log(response.text);</code>
                 detectIP();
                 initGoldData();
                 startGoldPriceUpdates();
+                filterKitCategory('all');
             }
         }
 
