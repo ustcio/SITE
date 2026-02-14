@@ -2010,13 +2010,29 @@
             color: var(--text-secondary);
         }
 
-        .visitor-activity-graph {
-            display: flex;
-            gap: 3px;
-            padding: 0.75rem;
+        .visitor-activity-wrapper {
+            position: relative;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 12px;
             border: 1px solid var(--glass-border);
+            padding: 0.5rem 0.75rem 0.75rem;
+        }
+
+        .visitor-activity-months {
+            position: relative;
+            height: 18px;
+            margin-bottom: 0.25rem;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .visitor-activity-months span {
+            position: absolute;
+        }
+
+        .visitor-activity-graph {
+            display: flex;
+            gap: 3px;
             overflow-x: auto;
         }
 
@@ -2073,19 +2089,6 @@
         .legend-cell[data-level="3"] { background: rgba(16, 185, 129, 0.6); }
         .legend-cell[data-level="4"] { background: rgba(16, 185, 129, 0.85); }
 
-        .visitor-activity-months {
-            position: relative;
-            height: 20px;
-            margin-top: 0.5rem;
-            margin-left: 1rem;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-        }
-
-        .visitor-activity-months span {
-            position: absolute;
-        }
-
         @media (max-width: 768px) {
             .visitor-activity {
                 padding: 2rem 1.5rem;
@@ -2107,7 +2110,7 @@
                 height: 10px;
             }
 
-            .visitor-activity-graph {
+            .visitor-activity-wrapper {
                 padding: 0.5rem;
             }
         }
@@ -8190,7 +8193,9 @@ button, a, input, select, textarea {
                     <span class="visitor-activity-title">🐱 Meow Note</span>
                     <span class="visitor-activity-subtitle">Visitor activity in the last year</span>
                 </div>
-                <div class="visitor-activity-graph" id="visitor-graph">
+                <div class="visitor-activity-wrapper">
+                    <div class="visitor-activity-months" id="visitor-months"></div>
+                    <div class="visitor-activity-graph" id="visitor-graph"></div>
                 </div>
                 <div class="visitor-activity-legend">
                     <span>Less</span>
@@ -10960,18 +10965,17 @@ console.log(response.text);</code>
         // ==================== 访客活动图生成 ====================
         function generateVisitorActivityGraph() {
             const graphContainer = document.getElementById('visitor-graph');
-            if (!graphContainer) return;
+            const monthsContainer = document.getElementById('visitor-months');
+            if (!graphContainer || !monthsContainer) return;
 
             graphContainer.innerHTML = '';
+            monthsContainer.innerHTML = '';
 
             const today = new Date();
             const weeks = 53;
             const daysPerWeek = 7;
 
             const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            
-            const monthLabelsContainer = document.createElement('div');
-            monthLabelsContainer.className = 'visitor-activity-months';
             
             let lastMonth = -1;
             const monthPositions = [];
@@ -11015,17 +11019,10 @@ console.log(response.text);</code>
                 const cellWidth = 13;
                 const gap = 3;
                 const weekWidth = cellWidth + gap;
-                const leftPos = pos.week * weekWidth + 12;
-                span.style.position = 'absolute';
+                const leftPos = pos.week * weekWidth;
                 span.style.left = leftPos + 'px';
-                monthLabelsContainer.appendChild(span);
+                monthsContainer.appendChild(span);
             });
-            
-            monthLabelsContainer.style.position = 'relative';
-            monthLabelsContainer.style.height = '20px';
-            monthLabelsContainer.style.marginLeft = '0';
-            monthLabelsContainer.style.marginTop = '0.5rem';
-            graphContainer.parentElement.appendChild(monthLabelsContainer);
         }
 
 
