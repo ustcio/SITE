@@ -9,6 +9,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -354,6 +356,20 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .logo-video {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-video:hover {
+            transform: scale(1.1);
         }
 
         .logo-icon {
@@ -2008,6 +2024,12 @@
             letter-spacing: 0.05em;
         }
 
+        .visitor-activity-title .logo-video {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+        }
+
         .visitor-activity-subtitle {
             font-size: 0.875rem;
             color: var(--text-secondary);
@@ -2124,6 +2146,16 @@
 
             .visitor-activity-months {
                 width: 100%;
+            }
+
+            .logo-video {
+                width: 28px;
+                height: 28px;
+            }
+
+            .visitor-activity-title .logo-video {
+                width: 20px;
+                height: 20px;
             }
         }
 
@@ -7948,7 +7980,13 @@ button, a, input, select, textarea {
     <nav>
         <div class="nav-container">
             <div class="nav-glass-container">
-                <div class="logo"><span class="logo-icon">🐱</span>Meow Note</div>
+                <div class="logo">
+                    <video class="logo-video" autoplay loop muted playsinline preload="auto" poster="favicon-32x32.png">
+                        <source src="fd48b61d2a156c50f3857b6a3bd100fb.mp4" type="video/mp4">
+                        <span class="logo-icon">🐱</span>
+                    </video>
+                    Meow Note
+                </div>
                 
                 <ul class="nav-links">
                     <li><a class="active" data-page="home" onclick="showPage('home')" data-i18n="nav.home">Home</a></li>
@@ -8181,7 +8219,12 @@ button, a, input, select, textarea {
         <section class="visitor-activity">
             <div class="visitor-activity-container">
                 <div class="visitor-activity-header">
-                    <span class="visitor-activity-title">🐱 Meow Note</span>
+                    <span class="visitor-activity-title">
+                        <video class="logo-video" autoplay loop muted playsinline preload="auto" poster="favicon-32x32.png">
+                            <source src="fd48b61d2a156c50f3857b6a3bd100fb.mp4" type="video/mp4">
+                        </video>
+                        Meow Note
+                    </span>
                     <span class="visitor-activity-subtitle">Visitor activity in the last year</span>
                 </div>
                 <div class="visitor-activity-wrapper">
