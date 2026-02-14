@@ -666,7 +666,6 @@
             box-shadow: 
                 0 4px 24px rgba(0, 212, 255, 0.2),
                 inset 0 1px 0 rgba(0, 212, 255, 0.3);
-            animation: badgeFloat 4s ease-in-out infinite;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: default;
         }
@@ -7510,16 +7509,27 @@ select:focus {
     opacity: 1;
 }
 
-/* 8. Hero徽章浮动动画增强 */
-.hero-badge,
-.page-badge {
+/* 8. Hero徽章样式 */
+.hero-badge {
     background: rgba(41, 151, 255, 0.15) !important;
     backdrop-filter: blur(20px) !important;
     border: 1px solid rgba(41, 151, 255, 0.3) !important;
     box-shadow: 
         0 4px 15px rgba(41, 151, 255, 0.2),
         inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
-    animation: floatBadge 3s ease-in-out infinite !important;
+}
+
+.page-badge {
+    background: rgba(41, 151, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(41, 151, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent);
+    display: inline-block;
+    margin-bottom: 1rem;
 }
 
 @keyframes floatBadge {
@@ -7745,10 +7755,14 @@ footer {
     }
 }
 
-/* 21. 特殊icon动画 */
+/* 21. 特殊icon动画 - 默认静止，hover时动 */
 .feature-icon {
-    animation: iconFloat 2s ease-in-out infinite;
     filter: drop-shadow(0 4px 15px rgba(41, 151, 255, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    animation: iconFloat 2s ease-in-out infinite;
 }
 
 @keyframes iconFloat {
