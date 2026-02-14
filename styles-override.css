@@ -1,24 +1,83 @@
-<style>
-/* === Liquid Glass Pro Override (auto injected) === */
+/* === Unified Clean Border Style === */
+/* All components use thin bright borders, no glow effects */
+
+/* Base card style - consistent across all components */
 .glass,
 [class*="glass"],
 .card,
 .panel,
 .modal,
 .hero-card,
-.feature-card{
-  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04)) !important;
-  backdrop-filter: blur(50px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(50px) saturate(180%) !important;
-  border:1px solid rgba(255,255,255,.18) !important;
-  border-radius:28px !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.35),
-    0 30px 80px rgba(0,0,0,.45) !important;
+.feature-card,
+.value-card,
+.paper-card,
+.team-card,
+.stat-item,
+.kit-tool-window,
+.chatbot-window {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    transition: transform 0.3s ease, border-color 0.3s ease !important;
 }
 
-/* soften any remaining borders */
-*{
-  border-color: rgba(255,255,255,.18);
+/* Hover effect - simple scale only */
+.feature-card:hover,
+.value-card:hover,
+.paper-card:hover,
+.team-card:hover,
+.stat-item:hover,
+.kit-tool-window:hover {
+    transform: scale(1.02) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
 }
-</style>
+
+/* Chatbot specific */
+.chatbot-window {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.chatbot-bubble {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Modal */
+.modal {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Soften borders globally */
+* {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .glass,
+[data-theme="light"] [class*="glass"],
+[data-theme="light"] .card,
+[data-theme="light"] .feature-card,
+[data-theme="light"] .value-card,
+[data-theme="light"] .paper-card,
+[data-theme="light"] .team-card,
+[data-theme="light"] .stat-item,
+[data-theme="light"] .kit-tool-window,
+[data-theme="light"] .chatbot-window {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .feature-card:hover,
+[data-theme="light"] .value-card:hover,
+[data-theme="light"] .paper-card:hover,
+[data-theme="light"] .team-card:hover,
+[data-theme="light"] .stat-item:hover,
+[data-theme="light"] .kit-tool-window:hover {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12) !important;
+}

@@ -3434,15 +3434,11 @@
         .chatbot-window {
             border-radius: 24px;
             overflow: hidden;
-            /* Liquid Glass ChatBot Window */
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(40px) saturate(180%);
             -webkit-backdrop-filter: blur(40px) saturate(180%);
-            box-shadow: 
-                0 30px 100px rgba(0, 0, 0, 0.5),
-                0 0 60px rgba(0, 212, 255, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.5);
         }
 
         .chatbot-header {
@@ -7421,21 +7417,7 @@
     -webkit-backdrop-filter: blur(60px) saturate(200%) !important;
 }
 
-/* 3. 悬停3D提升效果 */
-.feature-card:hover,
-.kit-tool-window:hover,
-.value-card:hover,
-.paper-card:hover,
-.team-card:hover,
-.stat-item:hover {
-    transform: translateY(-8px) scale(1.02) perspective(1000px) rotateX(2deg) !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-color: rgba(255, 255, 255, 0.25) !important;
-    box-shadow: 
-        0 25px 80px rgba(0, 0, 0, 0.6),
-        0 8px 25px rgba(0, 0, 0, 0.4),
-        inset 0 1px 3px rgba(255, 255, 255, 0.15) !important;
-}
+/* 3. Hover effect - handled by styles-override.css */
 
 /* 4. 所有标题渐变效果 */
 h1, h2, .hero h1, .gradient {
