@@ -2012,8 +2012,8 @@
 
         .visitor-activity-graph {
             display: flex;
-            gap: 3px;
-            padding: 1rem;
+            gap: 2px;
+            padding: 0.5rem;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 12px;
             border: 1px solid var(--glass-border);
@@ -2023,12 +2023,12 @@
         .visitor-activity-week {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 2px;
         }
 
         .visitor-activity-day {
-            width: 12px;
-            height: 12px;
+            width: 11px;
+            height: 11px;
             border-radius: 2px;
             background: rgba(255, 255, 255, 0.05);
             transition: all 0.2s ease;
@@ -2058,12 +2058,12 @@
 
         .legend-cells {
             display: flex;
-            gap: 3px;
+            gap: 2px;
         }
 
         .legend-cell {
-            width: 12px;
-            height: 12px;
+            width: 11px;
+            height: 11px;
             border-radius: 2px;
         }
 
@@ -2098,12 +2098,17 @@
             }
 
             .visitor-activity-day {
-                width: 10px;
-                height: 10px;
+                width: 9px;
+                height: 9px;
+            }
+
+            .legend-cell {
+                width: 9px;
+                height: 9px;
             }
 
             .visitor-activity-graph {
-                padding: 0.75rem;
+                padding: 0.5rem;
             }
         }
 
@@ -11005,11 +11010,12 @@ console.log(response.text);</code>
             }
 
             monthPositions.forEach((pos, index) => {
-                const nextPos = monthPositions[index + 1];
                 const span = document.createElement('span');
                 span.textContent = monthNames[pos.month];
-                const weekWidth = 15;
-                const leftPos = pos.week * weekWidth;
+                const cellWidth = 11;
+                const gap = 2;
+                const weekWidth = cellWidth + gap;
+                const leftPos = pos.week * weekWidth + 8;
                 span.style.position = 'absolute';
                 span.style.left = leftPos + 'px';
                 monthLabelsContainer.appendChild(span);
@@ -11017,7 +11023,8 @@ console.log(response.text);</code>
             
             monthLabelsContainer.style.position = 'relative';
             monthLabelsContainer.style.height = '20px';
-            monthLabelsContainer.style.marginLeft = '1rem';
+            monthLabelsContainer.style.marginLeft = '0';
+            monthLabelsContainer.style.marginTop = '0.5rem';
             graphContainer.parentElement.appendChild(monthLabelsContainer);
         }
 
