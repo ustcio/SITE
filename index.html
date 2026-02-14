@@ -174,10 +174,10 @@
 
         .glass-card:hover,
         .glass-button:hover {
-            transform: translateY(-5px) scale(1.01);
+            transform: scale(1.02);
             background: rgba(255, 255, 255, 0.08) !important;
             border-color: rgba(255, 255, 255, 0.2) !important;
-            box-shadow: var(--glass-shadow-hover) !important;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1), var(--glass-shadow-hover) !important;
         }
 
         /* Noise overlay */
@@ -341,7 +341,7 @@
         }
 
         .logo {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
             -webkit-background-clip: text;
@@ -368,8 +368,8 @@
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
-            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 50px;
             transition: all 0.3s var(--transition-smooth);
             cursor: pointer;
@@ -848,10 +848,10 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: scale(1.02);
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.1), 0 25px 80px rgba(0, 0, 0, 0.5);
         }
 
         .feature-icon {
@@ -3879,8 +3879,8 @@
         .kit-tool-window:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.15);
-            transform: translateY(-10px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1), 0 16px 48px rgba(0, 0, 0, 0.4);
         }
 
         .kit-tool-header {
@@ -8365,56 +8365,56 @@ button, a, input, select, textarea {
                         <li class="kit-category-item">
                             <button class="kit-category-btn active" data-category="all" onclick="filterKitCategory('all')">
                                 <span class="kit-category-icon">📦</span>
-                                <span>全部工具</span>
+                                <span data-i18n="kit.allTools">全部工具</span>
                                 <span class="kit-category-count">28</span>
                             </button>
                         </li>
                         <li class="kit-category-item">
                             <button class="kit-category-btn" data-category="network" onclick="filterKitCategory('network')">
                                 <span class="kit-category-icon">🌐</span>
-                                <span>网络工具</span>
+                                <span data-i18n="kit.networkTools">网络工具</span>
                                 <span class="kit-category-count">7</span>
                             </button>
                         </li>
                         <li class="kit-category-item">
                             <button class="kit-category-btn" data-category="security" onclick="filterKitCategory('security')">
                                 <span class="kit-category-icon">🔒</span>
-                                <span>安全工具</span>
+                                <span data-i18n="kit.securityTools">安全工具</span>
                                 <span class="kit-category-count">3</span>
                             </button>
                         </li>
                         <li class="kit-category-item">
                             <button class="kit-category-btn" data-category="finance" onclick="filterKitCategory('finance')">
                                 <span class="kit-category-icon">💰</span>
-                                <span>金融理财</span>
+                                <span data-i18n="kit.financeTools">金融理财</span>
                                 <span class="kit-category-count">3</span>
                             </button>
                         </li>
                         <li class="kit-category-item">
                             <button class="kit-category-btn" data-category="converter" onclick="filterKitCategory('converter')">
                                 <span class="kit-category-icon">🔄</span>
-                                <span>转换工具</span>
+                                <span data-i18n="kit.converterTools">转换工具</span>
                                 <span class="kit-category-count">5</span>
                             </button>
                         </li>
                         <li class="kit-category-item">
                             <button class="kit-category-btn" data-category="generator" onclick="filterKitCategory('generator')">
                                 <span class="kit-category-icon">⚡</span>
-                                <span>生成工具</span>
+                                <span data-i18n="kit.generatorTools">生成工具</span>
                                 <span class="kit-category-count">4</span>
                             </button>
                         </li>
                         <li class="kit-category-item">
                             <button class="kit-category-btn" data-category="calculator" onclick="filterKitCategory('calculator')">
                                 <span class="kit-category-icon">🔢</span>
-                                <span>计算工具</span>
+                                <span data-i18n="kit.calculatorTools">计算工具</span>
                                 <span class="kit-category-count">4</span>
                             </button>
                         </li>
                         <li class="kit-category-item">
                             <button class="kit-category-btn" data-category="fun" onclick="filterKitCategory('fun')">
                                 <span class="kit-category-icon">🎮</span>
-                                <span>趣味工具</span>
+                                <span data-i18n="kit.funTools">趣味工具</span>
                                 <span class="kit-category-count">2</span>
                             </button>
                         </li>
@@ -10177,7 +10177,7 @@ console.log(response.text);</code>
                 'demo.send': 'Send',
                 'kit.badge': 'Utility Toolkit',
                 'kit.title': 'Super',
-                'kit.subtitle': 'Professional tools · 26 practical tools to boost your daily work',
+                'kit.subtitle': 'Professional tools · 28 practical tools to boost your daily work',
                 'kit.speedTest': 'Speed Test',
                 'kit.pingTest': 'Ping Test',
                 'kit.ipDetection': 'IP Detection',
@@ -10198,6 +10198,14 @@ console.log(response.text);</code>
                 'kit.dateCalculator': 'Date Calculator',
                 'kit.worldClock': 'World Clock',
                 'kit.bmiCalculator': 'BMI Calculator',
+                'kit.scientificCalc': 'Calculator',
+                'kit.functionGraph': 'Graph Plotter',
+                'kit.citationGen': 'Citation Generator',
+                'kit.wavelength': 'Wavelength Converter',
+                'kit.luckyColor': 'Lucky Color',
+                'kit.tarot': 'Tarot Reading',
+                'kit.goldPrice': 'Gold Price',
+                'kit.domesticGold': 'Domestic Gold',
                 'kit.startTest': 'Start Test',
                 'kit.complete': 'Complete',
                 'kit.downloadSpeed': 'Download',
@@ -10205,7 +10213,14 @@ console.log(response.text);</code>
                 'kit.ping': 'Ping',
                 'kit.targetHost': 'Target Host',
                 'kit.pingPlaceholder': 'e.g., google.com',
-                'kit.ping': 'Ping',
+                'kit.allTools': 'All Tools',
+                'kit.networkTools': 'Network',
+                'kit.securityTools': 'Security',
+                'kit.financeTools': 'Finance',
+                'kit.converterTools': 'Converter',
+                'kit.generatorTools': 'Generator',
+                'kit.calculatorTools': 'Calculator',
+                'kit.funTools': 'Fun',
                 'kit.enterHost': 'Enter hostname or IP to start test',
                 'kit.detectMyIP': 'Detect My IP',
                 'kit.ipv4Addr': 'IPv4 Address',
@@ -10365,7 +10380,7 @@ console.log(response.text);</code>
                 'demo.send': '发送',
                 'kit.badge': '实用工具包',
                 'kit.title': '超级',
-                'kit.subtitle': '专业工具集 · 27款实用工具助力您的日常工作',
+                'kit.subtitle': '专业工具集 · 28款实用工具助力您的日常工作',
                 'kit.speedTest': '网速测试',
                 'kit.pingTest': 'Ping 测试',
                 'kit.ipDetection': 'IP 检测',
@@ -10386,6 +10401,14 @@ console.log(response.text);</code>
                 'kit.dateCalculator': '日期计算',
                 'kit.worldClock': '世界时钟',
                 'kit.bmiCalculator': 'BMI 计算',
+                'kit.scientificCalc': '科学计算器',
+                'kit.functionGraph': '函数图像',
+                'kit.citationGen': '参考文献',
+                'kit.wavelength': '波长频率',
+                'kit.luckyColor': '幸运颜色',
+                'kit.tarot': '塔罗占卜',
+                'kit.goldPrice': '国际金价',
+                'kit.domesticGold': '国内金价',
                 'kit.startTest': '开始测速',
                 'kit.complete': '完成',
                 'kit.downloadSpeed': '下载速度',
@@ -10393,7 +10416,29 @@ console.log(response.text);</code>
                 'kit.ping': '延迟',
                 'kit.targetHost': '目标主机',
                 'kit.pingPlaceholder': '例如: google.com',
-                'kit.ping': 'Ping',
+                'kit.allTools': '全部工具',
+                'kit.networkTools': '网络工具',
+                'kit.securityTools': '安全工具',
+                'kit.financeTools': '金融理财',
+                'kit.converterTools': '转换工具',
+                'kit.generatorTools': '生成工具',
+                'kit.calculatorTools': '计算工具',
+                'kit.funTools': '趣味工具',
+                'kit.httpHeaders': 'HTTP 头信息',
+                'kit.securityScan': '安全扫描',
+                'kit.currencyExchange': '汇率计算',
+                'kit.qrGenerator': '二维码生成',
+                'kit.shortUrl': '短链接',
+                'kit.unitConverter': '单位换算',
+                'kit.passwordCheck': '密码检测',
+                'kit.translator': '翻译',
+                'kit.baseConverter': '进制转换',
+                'kit.randomNumber': '随机数',
+                'kit.hashGenerator': '哈希生成',
+                'kit.ageCalculator': '年龄计算',
+                'kit.dateCalculator': '日期计算',
+                'kit.worldClock': '世界时钟',
+                'kit.bmiCalculator': 'BMI 计算',
                 'kit.enterHost': '输入主机名或IP地址开始测试',
                 'kit.detectMyIP': '检测我的 IP',
                 'kit.ipv4Addr': 'IPv4 地址',
